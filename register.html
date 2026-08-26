@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register — Qalbayn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory: #F7F2E7;
+    --ivory-deep: #EFE7D4;
+    --emerald: #0E4A3B;
+    --emerald-deep: #0A362B;
+    --brass: #B08A4E;
+    --brass-light: #D4B384;
+    --ink: #211E17;
+    --ink-soft: #56503f;
+    --error: #B3432B;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{
+    background: var(--ivory);
+    color: var(--ink);
+    font-family: 'Work Sans', sans-serif;
+    line-height: 1.6;
+    padding: 60px 24px 100px;
+  }
+  h1,h2{ font-family:'Amiri', serif; font-weight:700; color: var(--emerald-deep); }
+
+  .wrap{ max-width: 620px; margin: 0 auto; }
+
+  .brand-mark{ display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom: 30px; }
+  .logo-mark{ width:30px; height:auto; }
+  .logo-text{ font-family:'Amiri', serif; font-weight:700; font-size:1.3rem; color:var(--emerald-deep); }
+
+  .back-link{
+    display:block; text-align:center; font-size:0.85rem; color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+  .back-link:hover{ color: var(--emerald-deep); }
+
+  .intro{ text-align:center; margin-bottom: 42px; }
+  .intro .eyebrow{
+    text-transform:uppercase; letter-spacing:0.2em; font-size:0.72rem; font-weight:600; color: var(--brass);
+    display:block; margin-bottom: 12px;
+  }
+  .intro h1{ font-size: 1.8rem; margin-bottom: 16px; }
+  .intro p{ color: var(--ink-soft); font-size: 0.98rem; margin-bottom: 10px; }
+
+  form{
+    background: var(--ivory-deep);
+    border: 1px solid rgba(14,74,59,0.14);
+    border-radius: 10px;
+    padding: 38px 36px;
+  }
+
+  .field{ margin-bottom: 26px; }
+  .field:last-of-type{ margin-bottom: 0; }
+  label{
+    display:block; font-weight:500; font-size:0.94rem; color: var(--emerald-deep);
+    margin-bottom: 8px;
+  }
+  label .req{ color: var(--brass); margin-left: 3px; }
+  .help{ font-size: 0.82rem; color: var(--ink-soft); margin-top: 6px; line-height:1.5; }
+
+  input[type="text"], input[type="date"], input[type="tel"], select{
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid rgba(14,74,59,0.25);
+    border-radius: 6px;
+    background: var(--ivory);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.96rem;
+    color: var(--ink);
+  }
+  input:focus, select:focus{
+    outline: none; border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(14,74,59,0.12);
+  }
+  input.invalid, select.invalid{ border-color: var(--error); }
+  .error-msg{
+    color: var(--error); font-size: 0.82rem; margin-top: 6px; display:none;
+  }
+  .error-msg.show{ display:block; }
+
+  .radio-group{ display:flex; gap: 20px; flex-wrap:wrap; }
+  .radio-option{
+    display:flex; align-items:center; gap: 8px;
+    border: 1px solid rgba(14,74,59,0.25); border-radius: 6px;
+    padding: 10px 16px; cursor:pointer; font-size: 0.94rem;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .radio-option:has(input:checked){
+    border-color: var(--emerald-deep); background: rgba(14,74,59,0.06);
+  }
+  .radio-option input{ accent-color: var(--emerald-deep); }
+
+  .submit-btn{
+    width: 100%;
+    background: var(--emerald-deep); color: var(--ivory);
+    border: none; padding: 15px; border-radius: 30px;
+    font-family: 'Work Sans', sans-serif; font-weight:600; font-size: 1rem;
+    cursor:pointer; margin-top: 12px;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .submit-btn:hover{ background: var(--emerald); transform: translateY(-1px); }
+  .submit-btn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
+
+  .form-note{
+    text-align:center; font-size:0.82rem; color: var(--ink-soft); margin-top: 18px;
+  }
+
+  .status-box{
+    display:none;
+    text-align:center; padding: 50px 30px;
+  }
+  .status-box.show{ display:block; }
+  .status-box svg{ width:52px; height:52px; margin: 0 auto 18px; display:block; }
+  .status-box h2{ font-size: 1.5rem; margin-bottom: 10px; }
+  .status-box p{ color: var(--ink-soft); }
+
+  @media (max-width: 500px){
+    form{ padding: 28px 22px; }
+    .radio-group{ flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <a href="index.html" class="back-link">&larr; Back to Qalbayn</a>
+
+  <div class="brand-mark">
+    <svg class="logo-mark" viewBox="0 0 64 40" fill="none">
+      <path d="M20 8 C15 2, 4 4, 4 14 C4 23, 14 29, 20 34 C26 29, 36 23, 36 14 C36 4, 25 2, 20 8 Z" fill="#0E4A3B"/>
+      <path d="M44 8 C39 2, 28 4, 28 14 C28 23, 38 29, 44 34 C50 29, 60 23, 60 14 C60 4, 49 2, 44 8 Z" fill="#B08A4E"/>
+    </svg>
+    <span class="logo-text">Qalbayn</span>
+  </div>
+
+  <div id="form-view">
+    <div class="intro">
+      <span class="eyebrow">A matchmaking platform for Muslim community</span>
+      <h1>Register your interest</h1>
+      <p>Qalbayn helps you find a life partner the right way, with care, privacy, and family involvement at every step. Fill out this form to register your interest. Your information stays private and is shared only after mutual agreement between both families.</p>
+      <p>Registration is completely free. Once you submit the form, our team will personally review your responses and reach out to you.</p>
+    </div>
+
+    <form id="registerForm" novalidate>
+      <div class="field">
+        <label for="fullName">Full Name<span class="req">*</span></label>
+        <input type="text" id="fullName" name="fullName" required>
+        <div class="error-msg" id="err-fullName">Please enter your full name.</div>
+      </div>
+
+      <div class="field">
+        <label>Gender<span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="gender" value="Male" required> Male</label>
+          <label class="radio-option"><input type="radio" name="gender" value="Female"> Female</label>
+        </div>
+        <div class="error-msg" id="err-gender">Please select a gender.</div>
+      </div>
+
+      <div class="field">
+        <label for="dob">Date of Birth<span class="req">*</span></label>
+        <input type="date" id="dob" name="dob" required>
+        <div class="error-msg" id="err-dob">Please enter your date of birth.</div>
+      </div>
+
+      <div class="field">
+        <label>Marital status<span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="maritalStatus" value="Never Married" required> Never Married</label>
+          <label class="radio-option"><input type="radio" name="maritalStatus" value="Divorced"> Divorced</label>
+          <label class="radio-option"><input type="radio" name="maritalStatus" value="Widowed"> Widowed</label>
+        </div>
+        <div class="error-msg" id="err-maritalStatus">Please select a marital status.</div>
+      </div>
+
+      <div class="field">
+        <label for="city">Current City of residence<span class="req">*</span></label>
+        <input type="text" id="city" name="city" required>
+        <div class="error-msg" id="err-city">Please enter your city.</div>
+      </div>
+
+      <div class="field">
+        <label for="contact">Contact number (WhatsApp Number)<span class="req">*</span></label>
+        <input type="tel" id="contact" name="contact" inputmode="numeric" maxlength="10" placeholder="10-digit number" required>
+        <div class="help">This is for ease of communication. Your privacy will be maintained, and you will receive updates on WhatsApp.</div>
+        <div class="error-msg" id="err-contact">Please enter a valid 10-digit WhatsApp number.</div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">Submit registration</button>
+      <p class="form-note">You'll be taken to a short follow-up form next.</p>
+    </form>
+  </div>
+
+  <div class="status-box" id="statusSubmitting">
+    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#0E4A3B" stroke-width="2" stroke-dasharray="42" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.9s" repeatCount="indefinite"/></circle></svg>
+    <h2>Submitting your details…</h2>
+    <p>Please don't close this page.</p>
+  </div>
+
+  <div class="status-box" id="statusError">
+    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#B3432B" stroke-width="1.6"/><path d="M8 8 L16 16 M16 8 L8 16" stroke="#B3432B" stroke-width="1.6"/></svg>
+    <h2>Something went wrong</h2>
+    <p>We couldn't save your details. Please check your connection and try again.</p>
+    <button class="submit-btn" style="margin-top:22px; max-width:220px;" onclick="location.reload()">Try again</button>
+  </div>
+</div>
+
+<script>
+  // Replace this with your own Google Apps Script Web App URL (see setup instructions).
+  const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbxDQ_rY8svwXMVk0XDHJNL0gC7XpxNEFXqgFG6z3-NtcDbpw3xAa4Z55x8Wgcc6vVrRZQ/exec";
+  // Replace this with the link to your follow-up interview Google Form.
+  const NEXT_FORM_URL = "https://forms.gle/1HjKJ6vpL9JLMG2DA";
+
+  const form = document.getElementById('registerForm');
+  const formView = document.getElementById('form-view');
+  const statusSubmitting = document.getElementById('statusSubmitting');
+  const statusError = document.getElementById('statusError');
+
+  function clearErrors(){
+    document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+    document.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
+  }
+
+  function showError(fieldId){
+    const err = document.getElementById('err-' + fieldId);
+    if(err) err.classList.add('show');
+  }
+
+  function validate(data){
+    let valid = true;
+    if(!data.fullName.trim()){ showError('fullName'); valid = false; }
+    if(!data.gender){ showError('gender'); valid = false; }
+    if(!data.dob){ showError('dob'); valid = false; }
+    if(!data.maritalStatus){ showError('maritalStatus'); valid = false; }
+    if(!data.city.trim()){ showError('city'); valid = false; }
+    if(!/^[0-9]{10}$/.test(data.contact)){ showError('contact'); valid = false; }
+    return valid;
+  }
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    clearErrors();
+
+    const fd = new FormData(form);
+    const data = {
+      fullName: fd.get('fullName') || '',
+      gender: fd.get('gender') || '',
+      dob: fd.get('dob') || '',
+      maritalStatus: fd.get('maritalStatus') || '',
+      city: fd.get('city') || '',
+      contact: fd.get('contact') || ''
+    };
+
+    if(!validate(data)) return;
+
+    formView.style.display = 'none';
+    statusSubmitting.classList.add('show');
+
+    try{
+      if(SHEET_ENDPOINT.indexOf('PASTE_YOUR') === -1){
+        await fetch(SHEET_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+      }
+      // Small delay so the "submitting" state is visible, then move to the next form.
+      setTimeout(function(){
+        window.location.href = NEXT_FORM_URL;
+      }, 700);
+    }catch(err){
+      statusSubmitting.classList.remove('show');
+      statusError.classList.add('show');
+    }
+  });
+</script>
+
+</body>
+</html>
