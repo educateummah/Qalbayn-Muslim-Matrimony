@@ -24,104 +24,120 @@
     color: var(--ink);
     font-family: 'Work Sans', sans-serif;
     line-height: 1.6;
-    padding: 60px 24px 100px;
+    padding: 50px 20px 100px;
   }
   h1,h2{ font-family:'Amiri', serif; font-weight:700; color: var(--emerald-deep); }
 
-  .wrap{ max-width: 620px; margin: 0 auto; }
+  .wrap{ max-width: 640px; margin: 0 auto; }
 
-  .brand-mark{ display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom: 30px; }
-  .logo-mark{ width:30px; height:auto; }
-  .logo-text{ font-family:'Amiri', serif; font-weight:700; font-size:1.3rem; color:var(--emerald-deep); }
+  .brand-mark{ display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom: 26px; }
+  .logo-mark{ width:28px; height:auto; }
+  .logo-text{ font-family:'Amiri', serif; font-weight:700; font-size:1.25rem; color:var(--emerald-deep); }
 
   .back-link{
     display:block; text-align:center; font-size:0.85rem; color: var(--ink-soft);
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
   .back-link:hover{ color: var(--emerald-deep); }
 
-  .intro{ text-align:center; margin-bottom: 42px; }
+  .intro{ text-align:center; margin-bottom: 30px; }
   .intro .eyebrow{
-    text-transform:uppercase; letter-spacing:0.2em; font-size:0.72rem; font-weight:600; color: var(--brass);
-    display:block; margin-bottom: 12px;
+    text-transform:uppercase; letter-spacing:0.2em; font-size:0.7rem; font-weight:600; color: var(--brass);
+    display:block; margin-bottom: 10px;
   }
-  .intro h1{ font-size: 1.8rem; margin-bottom: 16px; }
-  .intro p{ color: var(--ink-soft); font-size: 0.98rem; margin-bottom: 10px; }
+  .intro h1{ font-size: 1.65rem; margin-bottom: 14px; }
+  .intro p{ color: var(--ink-soft); font-size: 0.92rem; margin-bottom: 8px; }
+
+  /* PROGRESS */
+  .progress-wrap{ margin-bottom: 22px; }
+  .progress-label{
+    display:flex; justify-content:space-between; font-size:0.78rem; color: var(--ink-soft);
+    margin-bottom: 8px; font-weight:500;
+  }
+  .progress-track{ height: 6px; background: rgba(14,74,59,0.12); border-radius: 4px; overflow:hidden; }
+  .progress-fill{ height:100%; background: var(--emerald-deep); border-radius:4px; transition: width 0.35s ease; }
 
   form{
     background: var(--ivory-deep);
     border: 1px solid rgba(14,74,59,0.14);
     border-radius: 10px;
-    padding: 38px 36px;
+    padding: 34px 32px;
   }
 
-  .field{ margin-bottom: 26px; }
+  .step{ display:none; }
+  .step.active{ display:block; }
+
+  .step-title{ font-size: 1.25rem; margin-bottom: 6px; }
+  .step-desc{ font-size: 0.86rem; color: var(--ink-soft); margin-bottom: 26px; line-height:1.55; }
+
+  .field{ margin-bottom: 24px; }
   .field:last-of-type{ margin-bottom: 0; }
   label{
-    display:block; font-weight:500; font-size:0.94rem; color: var(--emerald-deep);
+    display:block; font-weight:500; font-size:0.92rem; color: var(--emerald-deep);
     margin-bottom: 8px;
   }
   label .req{ color: var(--brass); margin-left: 3px; }
-  .help{ font-size: 0.82rem; color: var(--ink-soft); margin-top: 6px; line-height:1.5; }
+  .help{ font-size: 0.8rem; color: var(--ink-soft); margin-top: 6px; line-height:1.5; }
 
-  input[type="text"], input[type="date"], input[type="tel"], select{
+  input[type="text"], input[type="date"], input[type="tel"], textarea{
     width: 100%;
-    padding: 12px 14px;
+    padding: 11px 13px;
     border: 1px solid rgba(14,74,59,0.25);
     border-radius: 6px;
     background: var(--ivory);
     font-family: 'Work Sans', sans-serif;
-    font-size: 0.96rem;
+    font-size: 0.94rem;
     color: var(--ink);
   }
-  input:focus, select:focus{
+  textarea{ resize: vertical; min-height: 80px; }
+  input:focus, textarea:focus{
     outline: none; border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(14,74,59,0.12);
   }
-  input.invalid, select.invalid{ border-color: var(--error); }
-  .error-msg{
-    color: var(--error); font-size: 0.82rem; margin-top: 6px; display:none;
-  }
+  input.invalid, textarea.invalid{ border-color: var(--error); }
+  .error-msg{ color: var(--error); font-size: 0.8rem; margin-top: 6px; display:none; }
   .error-msg.show{ display:block; }
 
-  .radio-group{ display:flex; gap: 20px; flex-wrap:wrap; }
-  .radio-option{
-    display:flex; align-items:center; gap: 8px;
+  .radio-group, .checkbox-group{ display:flex; gap: 10px; flex-wrap:wrap; }
+  .radio-option, .checkbox-option{
+    display:flex; align-items:center; gap: 7px;
     border: 1px solid rgba(14,74,59,0.25); border-radius: 6px;
-    padding: 10px 16px; cursor:pointer; font-size: 0.94rem;
+    padding: 9px 14px; cursor:pointer; font-size: 0.88rem;
     transition: border-color 0.15s ease, background 0.15s ease;
   }
-  .radio-option:has(input:checked){
+  .radio-option:has(input:checked), .checkbox-option:has(input:checked){
     border-color: var(--emerald-deep); background: rgba(14,74,59,0.06);
   }
-  .radio-option input{ accent-color: var(--emerald-deep); }
+  .radio-option input, .checkbox-option input{ accent-color: var(--emerald-deep); }
 
-  .submit-btn{
-    width: 100%;
-    background: var(--emerald-deep); color: var(--ivory);
-    border: none; padding: 15px; border-radius: 30px;
-    font-family: 'Work Sans', sans-serif; font-weight:600; font-size: 1rem;
-    cursor:pointer; margin-top: 12px;
-    transition: background 0.2s ease, transform 0.15s ease;
-  }
-  .submit-btn:hover{ background: var(--emerald); transform: translateY(-1px); }
-  .submit-btn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
+  .conditional{ display:none; }
+  .conditional.show{ display:block; }
 
-  .form-note{
-    text-align:center; font-size:0.82rem; color: var(--ink-soft); margin-top: 18px;
+  .nav-row{ display:flex; gap: 12px; margin-top: 32px; }
+  .btn{
+    flex:1;
+    padding: 14px; border-radius: 30px; border:none;
+    font-family: 'Work Sans', sans-serif; font-weight:600; font-size: 0.96rem;
+    cursor:pointer; transition: background 0.2s ease, transform 0.15s ease;
   }
+  .btn-next{ background: var(--emerald-deep); color: var(--ivory); }
+  .btn-next:hover{ background: var(--emerald); transform: translateY(-1px); }
+  .btn-next:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
+  .btn-back{ background: transparent; color: var(--emerald-deep); border: 1px solid rgba(14,74,59,0.3); flex: 0 0 110px; }
+  .btn-back:hover{ background: rgba(14,74,59,0.06); }
 
-  .status-box{
-    display:none;
-    text-align:center; padding: 50px 30px;
-  }
+  .consent-item{ display:flex; gap:10px; align-items:flex-start; margin-bottom:16px; font-size:0.88rem; color: var(--ink-soft); }
+  .consent-item input{ margin-top:3px; accent-color: var(--emerald-deep); flex-shrink:0; }
+
+  .status-box{ display:none; text-align:center; padding: 50px 30px; }
   .status-box.show{ display:block; }
   .status-box svg{ width:52px; height:52px; margin: 0 auto 18px; display:block; }
-  .status-box h2{ font-size: 1.5rem; margin-bottom: 10px; }
+  .status-box h2{ font-size: 1.4rem; margin-bottom: 10px; }
   .status-box p{ color: var(--ink-soft); }
 
   @media (max-width: 500px){
-    form{ padding: 28px 22px; }
-    .radio-group{ flex-direction:column; }
+    form{ padding: 26px 20px; }
+    .radio-group, .checkbox-group{ flex-direction:column; }
+    .btn-back{ flex: 0 0 90px; }
   }
 </style>
 </head>
@@ -143,142 +159,686 @@
       <span class="eyebrow">A matchmaking platform for Muslim community</span>
       <h1>Register your interest</h1>
       <p>Qalbayn helps you find a life partner the right way, with care, privacy, and family involvement at every step. Fill out this form to register your interest. Your information stays private and is shared only after mutual agreement between both families.</p>
+      <p>Please provide accurate and honest details, as this will help us understand your preferences better and identify a more suitable match for you.</p>
+      <p>The form takes approximately 3–4 minutes to complete.</p>
       <p>Registration is completely free. Once you submit the form, our team will personally review your responses and reach out to you.</p>
     </div>
 
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="progressText">Section 1 of 6</span>
+        <span id="progressTitle">Personal Details &amp; Family Background</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width: 16.6%;"></div></div>
+    </div>
+
     <form id="registerForm" novalidate>
-      <div class="field">
-        <label for="fullName">Full Name<span class="req">*</span></label>
-        <input type="text" id="fullName" name="fullName" required>
-        <div class="error-msg" id="err-fullName">Please enter your full name.</div>
-      </div>
 
-      <div class="field">
-        <label>Gender<span class="req">*</span></label>
-        <div class="radio-group">
-          <label class="radio-option"><input type="radio" name="gender" value="Male" required> Male</label>
-          <label class="radio-option"><input type="radio" name="gender" value="Female"> Female</label>
+      <!-- ===================== STEP 1 ===================== -->
+      <div class="step active" data-step="1">
+        <div class="step-desc">Tell us a little about yourself and your family.</div>
+
+        <div class="field">
+          <label for="fullName">Full Name<span class="req">*</span></label>
+          <input type="text" id="fullName" name="fullName" required>
+          <div class="error-msg">Please enter your full name.</div>
         </div>
-        <div class="error-msg" id="err-gender">Please select a gender.</div>
-      </div>
 
-      <div class="field">
-        <label for="dob">Date of Birth<span class="req">*</span></label>
-        <input type="date" id="dob" name="dob" required>
-        <div class="error-msg" id="err-dob">Please enter your date of birth.</div>
-      </div>
-
-      <div class="field">
-        <label>Marital status<span class="req">*</span></label>
-        <div class="radio-group">
-          <label class="radio-option"><input type="radio" name="maritalStatus" value="Never Married" required> Never Married</label>
-          <label class="radio-option"><input type="radio" name="maritalStatus" value="Divorced"> Divorced</label>
-          <label class="radio-option"><input type="radio" name="maritalStatus" value="Widowed"> Widowed</label>
+        <div class="field">
+          <label for="contact">Contact number (WhatsApp Number)<span class="req">*</span></label>
+          <input type="tel" id="contact" name="contact" inputmode="numeric" maxlength="10" placeholder="10-digit number" required>
+          <div class="help">This is for ease of communication. Your privacy will be maintained, and you will receive updates on WhatsApp.</div>
+          <div class="error-msg">Please enter a valid 10-digit WhatsApp number.</div>
         </div>
-        <div class="error-msg" id="err-maritalStatus">Please select a marital status.</div>
+
+        <div class="field">
+          <label>Gender<span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="gender" value="Male" required> Male</label>
+            <label class="radio-option"><input type="radio" name="gender" value="Female"> Female</label>
+          </div>
+          <div class="error-msg">Please select a gender.</div>
+        </div>
+
+        <div class="field">
+          <label for="dob">Date of Birth<span class="req">*</span></label>
+          <input type="date" id="dob" name="dob" required>
+          <div class="error-msg">Please enter your date of birth.</div>
+        </div>
+
+        <div class="field">
+          <label>Marital Status<span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="maritalStatus" value="Never Married" required> Never Married</label>
+            <label class="radio-option"><input type="radio" name="maritalStatus" value="Divorced"> Divorced</label>
+            <label class="radio-option"><input type="radio" name="maritalStatus" value="Widowed"> Widowed</label>
+          </div>
+          <div class="error-msg">Please select a marital status.</div>
+        </div>
+
+        <div class="field">
+          <label for="city">Current city of residence<span class="req">*</span></label>
+          <input type="text" id="city" name="city" required>
+          <div class="error-msg">Please enter your city.</div>
+        </div>
+
+        <div class="field">
+          <label for="fatherName">Father's Name / Guardian's Name<span class="req">*</span></label>
+          <input type="text" id="fatherName" name="fatherName" required>
+          <div class="error-msg">Please enter this field.</div>
+        </div>
+
+        <div class="field">
+          <label for="fatherOccupation">Father's Occupation / Guardian's Occupation</label>
+          <input type="text" id="fatherOccupation" name="fatherOccupation">
+        </div>
+
+        <div class="field">
+          <label for="motherName">Mother's Name<span class="req">*</span></label>
+          <input type="text" id="motherName" name="motherName" required>
+          <div class="error-msg">Please enter this field.</div>
+        </div>
+
+        <div class="field">
+          <label for="motherOccupation">Mother's Occupation</label>
+          <input type="text" id="motherOccupation" name="motherOccupation">
+        </div>
+
+        <div class="field">
+          <label for="siblings">Siblings</label>
+          <textarea id="siblings" name="siblings" rows="2"></textarea>
+          <div class="help">Please mention the number of siblings and marital status. Example: "2 brothers — both married; 1 sister — unmarried."</div>
+        </div>
+
+        <div class="field">
+          <label for="nativePlace">Native Place / Hometown<span class="req">*</span></label>
+          <input type="text" id="nativePlace" name="nativePlace" required>
+          <div class="error-msg">Please enter this field.</div>
+        </div>
+
+        <div class="field">
+          <label for="motherTongue">Mother Tongue (Language spoken at home)<span class="req">*</span></label>
+          <input type="text" id="motherTongue" name="motherTongue" required>
+          <div class="error-msg">Please enter this field.</div>
+        </div>
       </div>
 
-      <div class="field">
-        <label for="city">Current City of residence<span class="req">*</span></label>
-        <input type="text" id="city" name="city" required>
-        <div class="error-msg" id="err-city">Please enter your city.</div>
+      <!-- ===================== STEP 2 ===================== -->
+      <div class="step" data-step="2">
+        <div class="step-desc">Your education, work, and Islamic learning background.</div>
+
+        <div class="field">
+          <label>Highest Qualification<span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="qualification" value="High School" required> High School</label>
+            <label class="radio-option"><input type="radio" name="qualification" value="12th/PUC"> 12th/PUC</label>
+            <label class="radio-option"><input type="radio" name="qualification" value="Diploma"> Diploma</label>
+            <label class="radio-option"><input type="radio" name="qualification" value="Bachelor's degree"> Bachelor's degree</label>
+            <label class="radio-option"><input type="radio" name="qualification" value="Master's degree"> Master's degree</label>
+            <label class="radio-option"><input type="radio" name="qualification" value="Doctorate"> Doctorate</label>
+            <label class="radio-option"><input type="radio" name="qualification" value="Other"> Other</label>
+          </div>
+          <div class="error-msg">Please select your highest qualification.</div>
+        </div>
+
+        <div class="field">
+          <label for="occupation">Current Occupation</label>
+          <input type="text" id="occupation" name="occupation">
+        </div>
+
+        <div class="field">
+          <label>Monthly Income Range</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="income" value="Prefer Not to say"> Prefer not to say</label>
+            <label class="radio-option"><input type="radio" name="income" value="Below ₹25,000"> Below ₹25,000</label>
+            <label class="radio-option"><input type="radio" name="income" value="₹25,000–₹50,000"> ₹25,000–₹50,000</label>
+            <label class="radio-option"><input type="radio" name="income" value="₹50,000–₹1 lakh"> ₹50,000–₹1 lakh</label>
+            <label class="radio-option"><input type="radio" name="income" value="₹1 lakh+"> ₹1 lakh+</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Have you completed Noorani Qaida?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="nooraniQaida" value="Yes, completed"> Yes, completed</label>
+            <label class="radio-option"><input type="radio" name="nooraniQaida" value="Started but not completed"> Started but not completed</label>
+            <label class="radio-option"><input type="radio" name="nooraniQaida" value="No"> No</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>What is your ability to read the Quran in Arabic?<span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="quranReading" value="I can read the Quran fluently" required> Fluently</label>
+            <label class="radio-option"><input type="radio" name="quranReading" value="I can read the Quran but slowly"> Slowly</label>
+            <label class="radio-option"><input type="radio" name="quranReading" value="I cannot read Arabic"> I cannot read Arabic</label>
+          </div>
+          <div class="error-msg">Please select an option.</div>
+        </div>
+
+        <div class="field">
+          <label>What is your highest level of Islamic education?<span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="islamicEducation" value="Basic Islamic studies / Madrasah" required> Basic / Madrasah</label>
+            <label class="radio-option"><input type="radio" name="islamicEducation" value="Alim/Alima course - completed"> Alim/Alima — completed</label>
+            <label class="radio-option"><input type="radio" name="islamicEducation" value="Alim/Alima course - currently studying"> Alim/Alima — studying</label>
+            <label class="radio-option"><input type="radio" name="islamicEducation" value="Hifz / Hafizah"> Hifz / Hafizah</label>
+            <label class="radio-option"><input type="radio" name="islamicEducation" value="No formal Islamic education"> No formal education</label>
+            <label class="radio-option"><input type="radio" name="islamicEducation" value="Other"> Other</label>
+          </div>
+          <div class="error-msg">Please select an option.</div>
+        </div>
       </div>
 
-      <div class="field">
-        <label for="contact">Contact number (WhatsApp Number)<span class="req">*</span></label>
-        <input type="tel" id="contact" name="contact" inputmode="numeric" maxlength="10" placeholder="10-digit number" required>
-        <div class="help">This is for ease of communication. Your privacy will be maintained, and you will receive updates on WhatsApp.</div>
-        <div class="error-msg" id="err-contact">Please enter a valid 10-digit WhatsApp number.</div>
+      <!-- ===================== STEP 3 ===================== -->
+      <div class="step" data-step="3">
+        <div class="step-desc">A few questions about your religious practice.</div>
+
+        <div class="field">
+          <label>Sect<span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="sect" value="Sunni" required> Sunni</label>
+            <label class="radio-option"><input type="radio" name="sect" value="Shia"> Shia</label>
+            <label class="radio-option"><input type="radio" name="sect" value="Other"> Other</label>
+          </div>
+          <div class="error-msg">Please select a sect.</div>
+        </div>
+
+        <div class="field">
+          <label>Maslak / School of Thought<span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="maslak" value="Barelvi" required> Barelvi</label>
+            <label class="radio-option"><input type="radio" name="maslak" value="Deobandi / Tablighi Jamat"> Deobandi / Tablighi Jamat</label>
+            <label class="radio-option"><input type="radio" name="maslak" value="Ahl-e-Hadith / Salafi"> Ahl-e-Hadith / Salafi</label>
+            <label class="radio-option"><input type="radio" name="maslak" value="Not affiliated with a specific school of thought"> Not affiliated</label>
+            <label class="radio-option"><input type="radio" name="maslak" value="Other"> Other</label>
+          </div>
+          <div class="error-msg">Please select an option.</div>
+        </div>
+
+        <div class="field">
+          <label>Do you pray five times a day?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="prayer" value="Yes, regularly"> Yes, regularly</label>
+            <label class="radio-option"><input type="radio" name="prayer" value="Usually"> Usually</label>
+            <label class="radio-option"><input type="radio" name="prayer" value="Sometimes"> Sometimes</label>
+            <label class="radio-option"><input type="radio" name="prayer" value="Rarely"> Rarely</label>
+          </div>
+        </div>
+
+        <div class="field conditional" id="beardField">
+          <label>For men: Do you keep a beard in accordance with Sunnah?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="beard" value="Yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="beard" value="Yes, but I keep it trimmed"> Yes, but trimmed</label>
+            <label class="radio-option"><input type="radio" name="beard" value="No"> No</label>
+          </div>
+        </div>
+
+        <div class="field conditional" id="hijabField">
+          <label>For women: Do you observe Hijab?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="hijab" value="Yes, regularly"> Yes, regularly</label>
+            <label class="radio-option"><input type="radio" name="hijab" value="Yes, sometimes"> Yes, sometimes</label>
+            <label class="radio-option"><input type="radio" name="hijab" value="No"> No</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Do you fast during Ramadan?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="fasting" value="Yes, regularly"> Yes, regularly</label>
+            <label class="radio-option"><input type="radio" name="fasting" value="Usually"> Usually</label>
+            <label class="radio-option"><input type="radio" name="fasting" value="Sometimes"> Sometimes</label>
+            <label class="radio-option"><input type="radio" name="fasting" value="Rarely"> Rarely</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>How often do you read or listen to the Quran?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="quranFrequency" value="Daily"> Daily</label>
+            <label class="radio-option"><input type="radio" name="quranFrequency" value="Several times a week"> Several times a week</label>
+            <label class="radio-option"><input type="radio" name="quranFrequency" value="Occasionally"> Occasionally</label>
+            <label class="radio-option"><input type="radio" name="quranFrequency" value="Rarely"> Rarely</label>
+            <label class="radio-option"><input type="radio" name="quranFrequency" value="Not currently"> Not currently</label>
+          </div>
+        </div>
       </div>
 
-      <button type="submit" class="submit-btn" id="submitBtn">Submit registration</button>
-      <p class="form-note">You'll be taken to a short follow-up form next.</p>
+      <!-- ===================== STEP 4 ===================== -->
+      <div class="step" data-step="4">
+        <div class="step-desc">Help us understand your everyday life and personality.</div>
+
+        <div class="field">
+          <label>Diet<span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="diet" value="Vegetarian" required> Vegetarian</label>
+            <label class="radio-option"><input type="radio" name="diet" value="Non-Vegetarian"> Non-Vegetarian</label>
+          </div>
+          <div class="error-msg">Please select an option.</div>
+        </div>
+
+        <div class="field">
+          <label>Do you smoke?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="smoke" value="Yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="smoke" value="Occasionally"> Occasionally</label>
+            <label class="radio-option"><input type="radio" name="smoke" value="No"> No</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>How would you describe your social personality?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="personality" value="Very introverted, I prefer a quiet life and small circle"> Very introverted</label>
+            <label class="radio-option"><input type="radio" name="personality" value="Balanced, comfortable in both settings"> Balanced</label>
+            <label class="radio-option"><input type="radio" name="personality" value="Very extroverted, I enjoy being socially active"> Very extroverted</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="aboutYou">Tell us about yourself</label>
+          <textarea id="aboutYou" name="aboutYou" rows="3"></textarea>
+          <div class="help">In a few sentences, share your personality, interests, values, daily life, strengths, or anything else you feel would help us understand you better.</div>
+        </div>
+
+        <div class="field">
+          <label for="futureGoals">What are your future goals and ambitions?</label>
+          <textarea id="futureGoals" name="futureGoals" rows="3"></textarea>
+          <div class="help">Tell us about your career aspirations, personal goals, where you would like to live, and the kind of life you hope to build in the next 5–10 years.</div>
+        </div>
+
+        <div class="field">
+          <label>How do you usually spend your free time?</label>
+          <div class="checkbox-group">
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Spending time with family"> Family</label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Meeting friends"> Meeting friends</label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Reading"> Reading</label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Watching movies/TV"> Movies/TV</label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Social media"> Social media</label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Gaming"> Gaming</label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Sports/fitness"> Sports/fitness</label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Community/volunteer work"> Volunteer work</label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Hobbies/creative activities"> Hobbies/creative</label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Mostly relaxing at home"> Relaxing at home</label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Islamic learning"> Islamic learning</label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Other"> Other</label>
+          </div>
+          <div class="help">You can select more than one option.</div>
+        </div>
+      </div>
+
+      <!-- ===================== STEP 5 ===================== -->
+      <div class="step" data-step="5">
+        <div class="step-desc">Every person has their own preferences when choosing a life partner. Share what matters most to you, including religious values, character, family background, lifestyle, and other expectations. This will help us look beyond basic biodata and identify a more meaningful and compatible match.</div>
+
+        <div class="field">
+          <label>What age range would you prefer for your potential spouse?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="prefAge" value="18-22"> 18–22</label>
+            <label class="radio-option"><input type="radio" name="prefAge" value="23-27"> 23–27</label>
+            <label class="radio-option"><input type="radio" name="prefAge" value="28-32"> 28–32</label>
+            <label class="radio-option"><input type="radio" name="prefAge" value="33-37"> 33–37</label>
+            <label class="radio-option"><input type="radio" name="prefAge" value="38-40"> 38–40</label>
+            <label class="radio-option"><input type="radio" name="prefAge" value="40+"> 40+</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>What height range would you prefer for your potential spouse?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="prefHeight" value="No specific preference"> No preference</label>
+            <label class="radio-option"><input type="radio" name="prefHeight" value="Below 5'0&quot;"> Below 5'0"</label>
+            <label class="radio-option"><input type="radio" name="prefHeight" value="5'0&quot; – 5'3&quot;"> 5'0"–5'3"</label>
+            <label class="radio-option"><input type="radio" name="prefHeight" value="5'4&quot; – 5'7&quot;"> 5'4"–5'7"</label>
+            <label class="radio-option"><input type="radio" name="prefHeight" value="5'8&quot; – 5'11&quot;"> 5'8"–5'11"</label>
+            <label class="radio-option"><input type="radio" name="prefHeight" value="Above 6'0&quot;"> Above 6'0"</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>What type of occupation would you prefer in your spouse?</label>
+          <div class="checkbox-group">
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="No specific preference"> No preference</label>
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Government employee"> Government employee</label>
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Private-sector employee"> Private-sector employee</label>
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Business / Entrepreneur"> Business/Entrepreneur</label>
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Teacher / Academic"> Teacher/Academic</label>
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Healthcare professional"> Healthcare professional</label>
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Other"> Other</label>
+          </div>
+          <div class="help">You can select more than one option.</div>
+        </div>
+
+        <div class="field">
+          <label>What are your expectations regarding living arrangements after marriage?<span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="livingArrangement" value="I strongly prefer an independent home" required> Independent home</label>
+            <label class="radio-option"><input type="radio" name="livingArrangement" value="I prefer living with parents/in-laws"> With parents/in-laws</label>
+            <label class="radio-option"><input type="radio" name="livingArrangement" value="I am comfortable with either"> Comfortable with either</label>
+            <label class="radio-option"><input type="radio" name="livingArrangement" value="I would like to discuss this with my potential spouse"> Discuss with spouse</label>
+          </div>
+          <div class="error-msg">Please select an option.</div>
+        </div>
+
+        <div class="field">
+          <label>How important is regular Salah (five daily prayers) in your spouse?<span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="salahImportance" value="Very important" required> Very important</label>
+            <label class="radio-option"><input type="radio" name="salahImportance" value="Preferred, but flexible"> Preferred, but flexible</label>
+            <label class="radio-option"><input type="radio" name="salahImportance" value="Not important"> Not important</label>
+          </div>
+          <div class="error-msg">Please select an option.</div>
+        </div>
+
+        <div class="field conditional" id="hijabImportanceField">
+          <label>How important is it to you that your spouse observes hijab?<span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="hijabImportance" value="Very important"> Very important</label>
+            <label class="radio-option"><input type="radio" name="hijabImportance" value="Preferred, but flexible"> Preferred, but flexible</label>
+            <label class="radio-option"><input type="radio" name="hijabImportance" value="Not important"> Not important</label>
+          </div>
+          <div class="error-msg">Please select an option.</div>
+        </div>
+
+        <div class="field conditional" id="beardImportanceField">
+          <label>How important is it to you that your spouse keeps a beard in accordance with the Sunnah?<span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="beardImportance" value="Very important"> Very important</label>
+            <label class="radio-option"><input type="radio" name="beardImportance" value="Preferred, but flexible"> Preferred, but flexible</label>
+            <label class="radio-option"><input type="radio" name="beardImportance" value="Not important"> Not important</label>
+          </div>
+          <div class="error-msg">Please select an option.</div>
+        </div>
+
+        <div class="field">
+          <label>What is your view on dowry / demands from the bride's family?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="dowryView" value="Completely against it"> Completely against it</label>
+            <label class="radio-option"><input type="radio" name="dowryView" value="I believe there should be no demands, but gifts from the family are acceptable if voluntary"> No demands, voluntary gifts okay</label>
+            <label class="radio-option"><input type="radio" name="dowryView" value="I'm open to discussing expectations between families"> Open to discussing</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="spouseExpectations">What are your expectations from your future spouse?</label>
+          <textarea id="spouseExpectations" name="spouseExpectations" rows="3"></textarea>
+          <div class="help">Please share what you value and expect from your spouse in marriage.</div>
+        </div>
+
+        <div class="field">
+          <label for="otherPreferences">Are there any other important preferences you would like us to consider?</label>
+          <textarea id="otherPreferences" name="otherPreferences" rows="3"></textarea>
+          <div class="help">Family values, lifestyle, career expectations, location, religious preferences, or other compatibility factors.</div>
+        </div>
+      </div>
+
+      <!-- ===================== STEP 6 ===================== -->
+      <div class="step" data-step="6">
+        <div class="step-desc">Family involvement is one of Qalbayn's core values. Please provide your Wali/Guardian's details so they can be involved at the appropriate stage, with your consent.</div>
+
+        <div class="field">
+          <label for="waliName">Wali / Guardian's Full Name<span class="req">*</span></label>
+          <input type="text" id="waliName" name="waliName" required>
+          <div class="error-msg">Please enter this field.</div>
+        </div>
+
+        <div class="field">
+          <label>Relationship to the Wali / Guardian</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="waliRelationship" value="Father"> Father</label>
+            <label class="radio-option"><input type="radio" name="waliRelationship" value="Mother"> Mother</label>
+            <label class="radio-option"><input type="radio" name="waliRelationship" value="Brother"> Brother</label>
+            <label class="radio-option"><input type="radio" name="waliRelationship" value="Sister"> Sister</label>
+            <label class="radio-option"><input type="radio" name="waliRelationship" value="Other family member"> Other family member</label>
+            <label class="radio-option"><input type="radio" name="waliRelationship" value="Friend"> Friend</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="waliContact">Wali / Guardian's WhatsApp Number<span class="req">*</span></label>
+          <input type="tel" id="waliContact" name="waliContact" inputmode="numeric" maxlength="10" placeholder="10-digit number" required>
+          <div class="error-msg">Please enter a valid 10-digit WhatsApp number.</div>
+        </div>
+
+        <div class="field">
+          <label>Consent &amp; Permission<span class="req">*</span></label>
+          <div class="consent-item">
+            <input type="checkbox" name="consent1" id="consent1" required>
+            <label for="consent1" style="margin:0; font-weight:400;">I confirm that the information I have provided in this form is true and accurate to the best of my knowledge.</label>
+          </div>
+          <div class="consent-item">
+            <input type="checkbox" name="consent2" id="consent2" required>
+            <label for="consent2" style="margin:0; font-weight:400;">I give Qalbayn permission to use my profile information for the purpose of identifying and facilitating suitable matrimonial matches.</label>
+          </div>
+          <div class="consent-item">
+            <input type="checkbox" name="consent3" id="consent3" required>
+            <label for="consent3" style="margin:0; font-weight:400;">I understand that my personal contact details, including my WhatsApp number, will not be shared with a potential match without my consent and/or the appropriate mutual agreement.</label>
+          </div>
+          <div class="error-msg" id="err-consent">Please accept all three consent statements to continue.</div>
+        </div>
+      </div>
+
+      <div class="nav-row">
+        <button type="button" class="btn btn-back" id="backBtn" style="display:none;">Back</button>
+        <button type="button" class="btn btn-next" id="nextBtn">Next</button>
+      </div>
     </form>
   </div>
 
   <div class="status-box" id="statusSubmitting">
     <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#0E4A3B" stroke-width="2" stroke-dasharray="42" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.9s" repeatCount="indefinite"/></circle></svg>
-    <h2>Submitting your details…</h2>
+    <h2>Saving your details…</h2>
     <p>Please don't close this page.</p>
+  </div>
+
+  <div class="status-box" id="statusDone">
+    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#0E4A3B" stroke-width="1.6"/><path d="M8 12 L11 15 L16 9" stroke="#B08A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <h2>Thank you for registering!</h2>
+    <p>Your details have been saved. Our team will personally review your responses and reach out to you on WhatsApp shortly.</p>
   </div>
 
   <div class="status-box" id="statusError">
     <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#B3432B" stroke-width="1.6"/><path d="M8 8 L16 16 M16 8 L8 16" stroke="#B3432B" stroke-width="1.6"/></svg>
     <h2>Something went wrong</h2>
     <p>We couldn't save your details. Please check your connection and try again.</p>
-    <button class="submit-btn" style="margin-top:22px; max-width:220px;" onclick="location.reload()">Try again</button>
+    <button class="btn btn-next" style="margin-top:22px;" onclick="location.reload()">Try again</button>
   </div>
 </div>
 
 <script>
   // Replace this with your own Google Apps Script Web App URL (see setup instructions).
   const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbxDQ_rY8svwXMVk0XDHJNL0gC7XpxNEFXqgFG6z3-NtcDbpw3xAa4Z55x8Wgcc6vVrRZQ/exec";
-  // Replace this with the link to your follow-up interview Google Form.
-  const NEXT_FORM_URL = "https://forms.gle/1HjKJ6vpL9JLMG2DA";
+
+  const TOTAL_STEPS = 6;
+  const STEP_TITLES = [
+    "Personal Details & Family Background",
+    "Education & Profession",
+    "Religious Background",
+    "Lifestyle & Personality",
+    "Partner Preferences",
+    "Wali / Guardian Details & Consent"
+  ];
+
+  let currentStep = 1;
+  // A unique ID for this submission so every "Next" click updates the same sheet row.
+  const submissionId = (crypto.randomUUID ? crypto.randomUUID() : 'sub-' + Date.now() + '-' + Math.random().toString(16).slice(2));
 
   const form = document.getElementById('registerForm');
   const formView = document.getElementById('form-view');
   const statusSubmitting = document.getElementById('statusSubmitting');
+  const statusDone = document.getElementById('statusDone');
   const statusError = document.getElementById('statusError');
+  const nextBtn = document.getElementById('nextBtn');
+  const backBtn = document.getElementById('backBtn');
+  const progressText = document.getElementById('progressText');
+  const progressTitle = document.getElementById('progressTitle');
+  const progressFill = document.getElementById('progressFill');
 
-  function clearErrors(){
-    document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
-    document.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
+  function updateProgress(){
+    progressText.textContent = 'Section ' + currentStep + ' of ' + TOTAL_STEPS;
+    progressTitle.textContent = STEP_TITLES[currentStep - 1];
+    progressFill.style.width = ((currentStep / TOTAL_STEPS) * 100) + '%';
   }
 
-  function showError(fieldId){
-    const err = document.getElementById('err-' + fieldId);
-    if(err) err.classList.add('show');
+  function showStep(n){
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.querySelector('.step[data-step="' + n + '"]').classList.add('active');
+    backBtn.style.display = n === 1 ? 'none' : 'block';
+    nextBtn.textContent = n === TOTAL_STEPS ? 'Submit' : 'Next';
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function validate(data){
+  function clearErrorsInStep(stepEl){
+    stepEl.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+    stepEl.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
+  }
+
+  // Toggle gender-conditional fields.
+  function applyConditionals(){
+    const gender = form.querySelector('input[name="gender"]:checked');
+    const g = gender ? gender.value : '';
+    document.getElementById('beardField').classList.toggle('show', g === 'Male');
+    document.getElementById('hijabField').classList.toggle('show', g === 'Female');
+    // In partner-preferences: men are asked about a spouse's hijab, women about a spouse's beard.
+    document.getElementById('hijabImportanceField').classList.toggle('show', g === 'Male');
+    document.getElementById('beardImportanceField').classList.toggle('show', g === 'Female');
+  }
+  form.addEventListener('change', function(e){
+    if(e.target.name === 'gender') applyConditionals();
+  });
+
+  function validateStep(n){
+    const stepEl = document.querySelector('.step[data-step="' + n + '"]');
+    clearErrorsInStep(stepEl);
     let valid = true;
-    if(!data.fullName.trim()){ showError('fullName'); valid = false; }
-    if(!data.gender){ showError('gender'); valid = false; }
-    if(!data.dob){ showError('dob'); valid = false; }
-    if(!data.maritalStatus){ showError('maritalStatus'); valid = false; }
-    if(!data.city.trim()){ showError('city'); valid = false; }
-    if(!/^[0-9]{10}$/.test(data.contact)){ showError('contact'); valid = false; }
+    let firstInvalidEl = null;
+
+    function markInvalid(fieldEl){
+      if(!firstInvalidEl) firstInvalidEl = fieldEl;
+    }
+
+    stepEl.querySelectorAll('input[required]').forEach(function(input){
+      if(input.type === 'radio'){
+        const group = stepEl.querySelectorAll('input[name="' + input.name + '"]');
+        const checked = Array.from(group).some(r => r.checked);
+        if(!checked){
+          valid = false;
+          const fieldEl = input.closest('.field');
+          const err = fieldEl.querySelector('.error-msg');
+          if(err) err.classList.add('show');
+          markInvalid(fieldEl);
+        }
+      } else if(input.type === 'checkbox'){
+        if(!input.checked){
+          valid = false;
+          input.classList.add('invalid');
+          markInvalid(input.closest('.field') || input.closest('.consent-item'));
+        }
+      } else {
+        if(!input.value.trim()){
+          valid = false;
+          input.classList.add('invalid');
+          const fieldEl = input.closest('.field');
+          const err = fieldEl.querySelector('.error-msg');
+          if(err) err.classList.add('show');
+          markInvalid(fieldEl);
+        }
+        if(input.type === 'tel' && input.value.trim() && !/^[0-9]{10}$/.test(input.value.trim())){
+          valid = false;
+          input.classList.add('invalid');
+          const fieldEl = input.closest('.field');
+          const err = fieldEl.querySelector('.error-msg');
+          if(err) err.classList.add('show');
+          markInvalid(fieldEl);
+        }
+      }
+    });
+
+    // Consent checkboxes on the final step (shared single error message).
+    if(n === TOTAL_STEPS){
+      const consentBoxes = stepEl.querySelectorAll('input[name^="consent"]');
+      const allChecked = Array.from(consentBoxes).every(c => c.checked);
+      if(!allChecked){
+        valid = false;
+        document.getElementById('err-consent').classList.add('show');
+        markInvalid(document.getElementById('err-consent').closest('.field'));
+      }
+    }
+
+    if(!valid && firstInvalidEl){
+      firstInvalidEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const focusable = firstInvalidEl.querySelector('input, textarea');
+      if(focusable) focusable.focus({ preventScroll: true });
+    }
+
     return valid;
   }
 
-  form.addEventListener('submit', async function(e){
-    e.preventDefault();
-    clearErrors();
-
+  function collectAllData(){
     const fd = new FormData(form);
-    const data = {
-      fullName: fd.get('fullName') || '',
-      gender: fd.get('gender') || '',
-      dob: fd.get('dob') || '',
-      maritalStatus: fd.get('maritalStatus') || '',
-      city: fd.get('city') || '',
-      contact: fd.get('contact') || ''
-    };
-
-    if(!validate(data)) return;
-
-    formView.style.display = 'none';
-    statusSubmitting.classList.add('show');
-
-    try{
-      if(SHEET_ENDPOINT.indexOf('PASTE_YOUR') === -1){
-        await fetch(SHEET_ENDPOINT, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
+    const data = { submissionId: submissionId };
+    for(const [key, value] of fd.entries()){
+      if(data.hasOwnProperty(key)){
+        if(Array.isArray(data[key])){
+          data[key].push(value);
+        } else {
+          data[key] = [data[key], value];
+        }
+      } else {
+        data[key] = value;
       }
-      // Small delay so the "submitting" state is visible, then move to the next form.
-      setTimeout(function(){
-        window.location.href = NEXT_FORM_URL;
-      }, 700);
+    }
+    return data;
+  }
+
+  async function saveProgress(){
+    if(SHEET_ENDPOINT.indexOf('PASTE_YOUR') !== -1) return; // not configured yet
+    const data = collectAllData();
+    try{
+      await fetch(SHEET_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
     }catch(err){
-      statusSubmitting.classList.remove('show');
-      statusError.classList.add('show');
+      console.warn('Save may have failed:', err);
+    }
+  }
+
+  nextBtn.addEventListener('click', async function(){
+    if(!validateStep(currentStep)) return;
+
+    nextBtn.disabled = true;
+
+    if(currentStep < TOTAL_STEPS){
+      await saveProgress();
+      nextBtn.disabled = false;
+      currentStep++;
+      showStep(currentStep);
+    } else {
+      formView.style.display = 'none';
+      statusSubmitting.classList.add('show');
+      await saveProgress();
+      setTimeout(function(){
+        statusSubmitting.classList.remove('show');
+        statusDone.classList.add('show');
+      }, 600);
     }
   });
+
+  backBtn.addEventListener('click', function(){
+    if(currentStep > 1){
+      currentStep--;
+      showStep(currentStep);
+    }
+  });
+
+  applyConditionals();
+  updateProgress();
 </script>
 
 </body>
