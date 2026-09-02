@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jazak Allahu Khairan — Qalbayn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory: #F7F2E7;
+    --ivory-deep: #EFE7D4;
+    --emerald: #0E4A3B;
+    --emerald-deep: #0A362B;
+    --brass: #B08A4E;
+    --brass-light: #D4B384;
+    --ink: #211E17;
+    --ink-soft: #56503f;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background: var(--ivory);
+    color: var(--ink);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  h1,h2,h3, .display{
+    font-family: 'Amiri', serif;
+    font-weight: 700;
+    color: var(--emerald-deep);
+    letter-spacing: 0.01em;
+  }
+  .eyebrow{
+    font-family:'Work Sans', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.72rem;
+    color: var(--brass);
+    font-weight: 600;
+  }
+  a{ color: inherit; text-decoration:none; }
+  .wrap{ max-width: 640px; margin: 0 auto; padding: 0 32px; }
+
+  .star-field{
+    position:absolute; inset:0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(14,74,59,0.07) 1.4px, transparent 0);
+    background-size: 34px 34px;
+    pointer-events:none;
+  }
+
+  .brand-mark{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    margin: 48px 0 34px;
+    position:relative; z-index:2;
+  }
+  .logo-mark{ height: 40px; width: auto; display:block; }
+  .tagline{
+    text-align:center; font-family:'Amiri', serif; font-style:italic; font-weight:400;
+    color: var(--brass); font-size: 0.9rem;
+  }
+
+  main{ position:relative; z-index:2; }
+
+  /* ── above-the-fold: everything a mobile user needs, no scroll ── */
+  .fold{
+    min-height: 100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap: 22px;
+    padding: 28px 24px;
+    text-align:center;
+  }
+  .fold .brand-mark{ margin: 0; }
+  .fold .eyebrow{ display:block; }
+  .fold h1{ font-size: clamp(1.55rem, 6vw, 2rem); line-height:1.28; }
+  .fold p.body-copy{
+    color: var(--ink-soft); font-size: 0.98rem; line-height:1.55; max-width: 420px;
+  }
+  .hl{ color: var(--emerald-deep); font-weight: 600; }
+
+  .fold-actions{
+    width:100%; max-width: 380px;
+    display:flex; flex-direction:column;
+    margin-top: 4px;
+  }
+  .cta-group{ margin-bottom: 20px; }
+  .cta-group:last-child{ margin-bottom:0; }
+  .cta-lead{
+    font-size: 0.95rem; color: var(--emerald-deep); font-weight: 600; margin-bottom: 10px;
+    line-height: 1.45;
+  }
+  .btn-primary{
+    display:block; width:100%;
+    background: var(--brass); color: var(--emerald-deep);
+    padding: 17px 20px; border-radius:30px; font-weight:600; font-size:1.02rem;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .btn-primary:hover{ background: var(--brass-light); transform: translateY(-1px); }
+
+  .btn-ghost{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:100%;
+    background: var(--ivory);
+    border: 1px solid rgba(14,74,59,0.35); color: var(--emerald-deep);
+    padding: 15px 20px; border-radius: 30px; font-weight: 500; font-size: 0.96rem;
+    transition: background 0.2s ease;
+  }
+  .btn-ghost:hover{ background: rgba(14,74,59,0.06); }
+  .btn-ghost svg{ width:19px; height:19px; flex-shrink:0; fill: #25D366; }
+
+  footer{
+    padding: 30px 32px; text-align:center; font-size:0.8rem; color: var(--ink-soft);
+    position:relative; z-index:2;
+  }
+
+  :focus-visible{ outline: 2px solid var(--brass); outline-offset:2px; }
+
+  @media (max-width: 480px){
+    .fold{ padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="star-field"></div>
+
+<main>
+  <div class="fold">
+    <div class="brand-mark">
+      <img class="logo-mark" src="qalbayn-logo.png" alt="Qalbayn">
+    </div>
+    <p class="tagline">Muslim matchmaking for Nikah</p>
+
+    <span class="eyebrow">Thank you</span>
+    <h1>JazakAllahu Khairan for sharing your thoughts.</h1>
+    <p class="body-copy">Your answers help us understand the real challenges Muslims face when searching for a life partner. We're building Qalbayn to make the journey toward nikah more thoughtful, family-involved, halal, and privacy-conscious.</p>
+
+    <div class="fold-actions">
+      <div class="cta-group">
+        <p class="cta-lead">If you're struggling to find someone who shares your values and expectations, register for free with Qalbayn.</p>
+        <a class="btn-primary" href="https://educateummah.github.io/Qalbayn-Muslim-Matrimony/register.html" target="_blank" rel="noopener">Register for Free</a>
+      </div>
+
+      <div class="cta-group">
+        <p class="cta-lead">Know someone facing the same challenge? Share Qalbayn with them on WhatsApp.</p>
+        <a class="btn-ghost" id="shareLink" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16.04 3C9.37 3 3.96 8.4 3.96 15.06c0 2.25.62 4.35 1.7 6.15L3 29l7.98-2.6a12.9 12.9 0 0 0 5.06 1.02h.01c6.67 0 12.08-5.4 12.08-12.06C28.12 8.7 22.7 3 16.04 3zm0 22.06h-.01a10 10 0 0 1-5.1-1.4l-.37-.22-3.78 1.23 1.24-3.68-.24-.38a9.98 9.98 0 0 1-1.53-5.34c0-5.53 4.5-10.03 10.03-10.03 2.68 0 5.2 1.05 7.1 2.94a9.96 9.96 0 0 1 2.93 7.1c0 5.53-4.5 10.03-10.03 10.03-.08-.03-.16-.03-.24-.03zm5.5-7.5c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.48-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.91-2.2-.24-.57-.49-.5-.67-.5-.17 0-.37-.02-.57-.02s-.52.07-.8.37c-.27.3-1.04 1.02-1.04 2.47s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35z"/></svg>
+          Share it on WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>Qalbayn &middot; A thoughtful way to begin</footer>
+
+<script>
+  var surveyUrl = window.location.origin + window.location.pathname.replace('thank-you.html', 'index.html');
+  var shareText = "Assalamu alaykum! If you're finding it hard to find a spouse for nikah (including for someone divorced or widowed), this 20-second survey led me to Qalbayn, a halal matchmaking platform for nikah worth checking out: " + surveyUrl;
+  document.getElementById('shareLink').href = "https://wa.me/?text=" + encodeURIComponent(shareText);
+</script>
+
+</body>
+</html>
