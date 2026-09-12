@@ -103,6 +103,8 @@
     transition: transform 0.15s ease, background 0.2s ease;
   }
   .btn-primary:hover{ background:var(--emerald); transform: translateY(-1px); }
+  .btn-primary .highlight-word{ color: var(--brass); font-weight:700; }
+  .cta-block .btn-primary .highlight-word{ color: var(--ivory); font-weight:700; }
   .btn-ghost{
     border:1px solid rgba(14,74,59,0.35); color:var(--emerald-deep);
     padding:15px 32px; border-radius:30px; font-weight:500; font-size:0.96rem;
@@ -292,7 +294,7 @@
       </svg>
       <span class="logo-text" data-en="Qalbayn" data-ur="قلبین">Qalbayn</span>
     </div>
-    <span class="eyebrow" data-en="A matchmaking platform for Muslim community" data-ur="بنگلورو کی مسلم کمیونٹی کے لیے ایک رشتہ پلیٹ فارم">A matchmaking platform for Muslim community</span>
+    <span class="eyebrow" data-en="A matchmaking platform for Muslim community" data-ur="مسلم کمیونٹی کے لیے ایک رشتہ پلیٹ فارم">A matchmaking platform for Muslim community</span>
     <h1 data-en="Finding a life partner<br>shouldn't feel like <em>guesswork</em>" data-ur="زندگی کا ساتھی تلاش کرنا<br><em>اندازوں کا کھیل</em> نہیں ہونا چاہیے">Finding a life partner<br>shouldn't feel like <em>guesswork</em></h1>
     <p class="sub" data-en="We ask the questions that actually matter values, expectations, daily life and bring together number of thoughtful matches, with families involved from the start." data-ur="ہم وہ سوالات پوچھتے ہیں جو واقعی اہم ہیں — اقدار، توقعات، روزمرہ زندگی — اور خاندانوں کی شمولیت کے ساتھ چند سوچے سمجھے رشتے پیش کرتے ہیں۔">We ask the questions that actually matter values, expectations, daily life and bring together a small number of thoughtful matches, with families involved from the start.</p>
     <div class="trust-badges">
@@ -310,8 +312,8 @@
       </span>
     </div>
     <div class="hero-ctas">
-      <a href="register.html" class="btn-primary" data-en="Register your interest for FREE!" data-ur="رجسٹر کریں">Register your interest for FREE</a>
-      <a href="https://wa.me/message/YGU273EBIOBCG1" target="_blank" class="btn-ghost" data-en="Contact us" data-ur="طریقہ کار دیکھیں">Contact us</a>
+      <a href="register.html" class="btn-primary" id="registerCta" data-en="Register your interest for free, <span class=&quot;highlight-word&quot;>BISMILLAH!</span>" data-ur="رجسٹر کریں، <span class=&quot;highlight-word&quot;>بسم اللہ!</span>">Register your interest for free, <span class="highlight-word">BISMILLAH!</span></a>
+      <a href="https://wa.me/message/YGU273EBIOBCG1?text=As-salamu%20alaikum" target="_blank" class="btn-ghost" data-en="Contact us" data-ur="ہم سے رابطہ کریں">Contact us</a>
     </div>
   </div>
 </section>
@@ -380,7 +382,7 @@
   </div>
 </section>
 
-<footer data-en="Qalbayn &middot; A thoughtful way to begin" data-ur="قلبین &middot; بنگلورو &middot; ایک سوچی سمجھی شروعات">
+<footer data-en="Qalbayn &middot; A thoughtful way to begin" data-ur="قلبین &middot; ایک سوچی سمجھی شروعات">
   Qalbayn &middot; A thoughtful way to begin
 </footer>
 
@@ -394,6 +396,8 @@
       var text = lang === 'ur' ? el.getAttribute('data-ur') : el.getAttribute('data-en');
       if(text !== null){ el.innerHTML = text; }
     });
+    var cta = document.getElementById('registerCta');
+    if(cta){ cta.setAttribute('href', lang === 'ur' ? 'register.html?lang=ur' : 'register.html'); }
     try{ localStorage.setItem('qalbayn-lang', lang); }catch(e){}
   }
   setLang('en');
