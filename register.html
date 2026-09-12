@@ -255,7 +255,7 @@
 
         <div class="field">
           <label for="dob"><span data-en="Date of Birth" data-ur="تاریخ پیدائش">Date of Birth</span><span class="req">*</span></label>
-          <input type="date" id="dob" name="dob" required>
+          <input type="date" id="dob" name="dob" min="1930-01-01" max="2010-12-31" required>
           <div class="help" id="ageDisplay"></div>
           <div class="error-msg" data-en="Please enter your date of birth." data-ur="براہ کرم اپنی تاریخ پیدائش درج کریں۔">Please enter your date of birth.</div>
           <div class="error-msg" id="err-dob-age" data-en="You must be at least 18 years old to register." data-ur="رجسٹریشن کے لیے آپ کی عمر کم از کم 18 سال ہونی چاہیے۔">You must be at least 18 years old to register.</div>
@@ -708,7 +708,7 @@
   <div class="status-box" id="statusDone">
     <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#0E4A3B" stroke-width="1.6"/><path d="M8 12 L11 15 L16 9" stroke="#B08A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <h2 data-en="Jazak Allahu Khairan!" data-ur="جزاک اللہ خیراً!">Jazak Allahu Khairan!</h2>
-    <p data-en="Your details have been saved, Alhamdulillah! Our team will personally review your responses and reach out to you on WhatsApp shortly." data-ur="آپ کی تفصیلات محفوظ کر لی گئی ہیں، الحمدللہ! ہماری ٹیم ذاتی طور پر آپ کے جوابات کا جائزہ لے کر جلد ہی واٹس ایپ پر آپ سے رابطہ کرے گی۔">Your details have been saved, Alhamdulillah! Our team will personally review your responses and reach out to you on WhatsApp shortly.</p>
+    <p data-en="Alhamdulillah! Your details have been saved. Our team will personally review your responses and reach out to you on WhatsApp shortly." data-ur="الحمدللہ! آپ کی تفصیلات محفوظ کر لی گئی ہیں۔ ہماری ٹیم ذاتی طور پر آپ کے جوابات کا جائزہ لے کر جلد ہی واٹس ایپ پر آپ سے رابطہ کرے گی۔">Alhamdulillah! Your details have been saved. Our team will personally review your responses and reach out to you on WhatsApp shortly.</p>
     <p style="margin-top:18px; padding-top:18px; border-top:1px solid rgba(14,74,59,0.14);" data-en="If you know someone who is looking for a spouse through a halal, family-oriented process, we would be grateful if you could share Qalbayn with them." data-ur="اگر آپ کسی ایسے شخص کو جانتے ہیں جو حلال اور خاندانی طریقے سے نکاح کے لیے رشتہ تلاش کر رہا ہے، تو براہِ کرم قلبین کے بارے میں انہیں ضرور بتائیں۔">If you know someone who is looking for a spouse through a halal, family-oriented process, we would be grateful if you could share Qalbayn with them.</p>
     <div class="cta-social-row">
       <a href="#" id="shareWhatsapp" class="btn-social btn-whatsapp" target="_blank" rel="noopener">
@@ -833,7 +833,10 @@
   }
   if(dobInput){
     const maxDob = eighteenYearsAgo();
-    dobInput.max = maxDob.toISOString().slice(0,10);
+    const yyyy = maxDob.getFullYear();
+    const mm = String(maxDob.getMonth() + 1).padStart(2, '0');
+    const dd = String(maxDob.getDate()).padStart(2, '0');
+    dobInput.max = `${yyyy}-${mm}-${dd}`;
   }
   const ageDisplay = document.getElementById('ageDisplay');
   function computeAge(dateStr){
