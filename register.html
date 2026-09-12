@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Register — Qalbayn</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@300;400;500;600&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ivory: #F7F2E7;
@@ -79,7 +79,7 @@
   label .req{ color: var(--brass); margin-left: 3px; }
   .help{ font-size: 0.8rem; color: var(--ink-soft); margin-top: 6px; line-height:1.5; }
 
-  input[type="text"], input[type="date"], input[type="tel"], textarea{
+  input[type="text"], input[type="date"], input[type="tel"], textarea, select{
     width: 100%;
     padding: 11px 13px;
     border: 1px solid rgba(14,74,59,0.25);
@@ -89,11 +89,13 @@
     font-size: 0.94rem;
     color: var(--ink);
   }
+  select{ cursor:pointer; }
+  select:invalid{ color: var(--ink-soft); }
   textarea{ resize: vertical; min-height: 80px; }
-  input:focus, textarea:focus{
+  input:focus, textarea:focus, select:focus{
     outline: none; border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(14,74,59,0.12);
   }
-  input.invalid, textarea.invalid{ border-color: var(--error); }
+  input.invalid, textarea.invalid, select.invalid{ border-color: var(--error); }
   .error-msg{ color: var(--error); font-size: 0.8rem; margin-top: 6px; display:none; }
   .error-msg.show{ display:block; }
 
@@ -105,9 +107,15 @@
     transition: border-color 0.15s ease, background 0.15s ease;
   }
   .radio-option:has(input:checked), .checkbox-option:has(input:checked){
-    border-color: var(--emerald-deep); background: rgba(14,74,59,0.06);
+    border-color: var(--emerald-deep); background: var(--emerald-deep); color: var(--ivory);
   }
+  .radio-option:has(input:checked) span, .checkbox-option:has(input:checked) span{ color: var(--ivory); }
   .radio-option input, .checkbox-option input{ accent-color: var(--emerald-deep); }
+  .radio-option input:checked, .checkbox-option input:checked{ accent-color: var(--brass-light); }
+  .radio-option:has(input:disabled), .checkbox-option:has(input:disabled){
+    opacity: 0.45; cursor: not-allowed;
+  }
+  .radio-option:has(input:disabled) input, .checkbox-option:has(input:disabled) input{ cursor: not-allowed; }
 
   .conditional{ display:none; }
   .conditional.show{ display:block; }
@@ -134,34 +142,65 @@
   .status-box h2{ font-size: 1.4rem; margin-bottom: 10px; }
   .status-box p{ color: var(--ink-soft); }
 
+  .cta-social-row{
+    display:flex; flex-direction:column; gap:12px; margin-top:18px; align-items:center;
+  }
+  .btn-social{
+    display:inline-flex; align-items:center; justify-content:center; gap:9px;
+    width:100%; max-width:280px; padding:10px 22px; border-radius:30px;
+    text-decoration:none; font-weight:600; font-size:0.9rem; color:#fff;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-social:hover{ transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0,0,0,0.2); }
+  .btn-whatsapp{ background: linear-gradient(135deg, #25D366, #128C7E); }
+  .btn-instagram{ background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4); }
+
   @media (max-width: 500px){
     form{ padding: 26px 20px; }
     .radio-group, .checkbox-group{ flex-direction:column; }
     .btn-back{ flex: 0 0 90px; }
   }
+
+  /* RTL / URDU MODE */
+  body.lang-ur{ direction: rtl; }
+  body.lang-ur, body.lang-ur p, body.lang-ur .eyebrow, body.lang-ur label,
+  body.lang-ur .help, body.lang-ur .step-desc, body.lang-ur .btn,
+  body.lang-ur textarea, body.lang-ur input, body.lang-ur select,
+  body.lang-ur .error-msg, body.lang-ur .consent-item{
+    font-family: 'Noto Nastaliq Urdu', serif;
+  }
+  body.lang-ur h1, body.lang-ur h2, body.lang-ur .logo-text{
+    font-family: 'Noto Nastaliq Urdu', serif; font-weight:700;
+  }
+  body.lang-ur label .req{ margin-left:0; margin-right:3px; }
+  body.lang-ur .progress-label{ direction:rtl; }
+  body.lang-ur .radio-group, body.lang-ur .checkbox-group{ direction:rtl; }
+  body.lang-ur .consent-item{ direction:rtl; }
+  body.lang-ur .nav-row{ direction:rtl; }
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <a href="index.html" class="back-link">&larr; Back to Qalbayn</a>
+  <a href="index.html" class="back-link" id="backLink" data-en="&larr; Back to Qalbayn" data-ur="قلبین کی طرف واپس &rarr;">&larr; Back to Qalbayn</a>
 
   <div class="brand-mark">
     <svg class="logo-mark" viewBox="0 0 64 40" fill="none">
       <path d="M20 8 C15 2, 4 4, 4 14 C4 23, 14 29, 20 34 C26 29, 36 23, 36 14 C36 4, 25 2, 20 8 Z" fill="#0E4A3B"/>
       <path d="M44 8 C39 2, 28 4, 28 14 C28 23, 38 29, 44 34 C50 29, 60 23, 60 14 C60 4, 49 2, 44 8 Z" fill="#B08A4E"/>
     </svg>
-    <span class="logo-text">Qalbayn</span>
+    <span class="logo-text" data-en="Qalbayn" data-ur="قلبین">Qalbayn</span>
   </div>
 
   <div id="form-view">
     <div class="intro">
-      <span class="eyebrow">A matchmaking platform for Muslim community</span>
-      <h1>Register your interest</h1>
-      <p>Qalbayn helps you find a life partner the right way, with care, privacy, and family involvement at every step. Fill out this form to register your interest. Your information stays private and is shared only after mutual agreement between both families.</p>
-      <p>Please provide accurate and honest details, as this will help us understand your preferences better and identify a more suitable match for you.</p>
-      <p>The form takes approximately 3–4 minutes to complete.</p>
-      <p>Registration is completely free. Once you submit the form, our team will personally review your responses and reach out to you.</p>
+      <span class="eyebrow" data-en="A matchmaking platform for Muslim community" data-ur="مسلم کمیونٹی کے لیے ایک رشتہ پلیٹ فارم">A matchmaking platform for Muslim community</span>
+      <h1 data-en="Register your interest" data-ur="اپنی دلچسپی رجسٹر کریں">Register your interest</h1>
+      <p data-en="Qalbayn helps you find a life partner the right way, with care, privacy, and family involvement at every step. Fill out this form to register your interest. Your information stays private and is shared only after mutual agreement between both families." data-ur="قلبین آپ کو صحیح طریقے سے، احتیاط، رازداری اور ہر مرحلے پر خاندان کی شمولیت کے ساتھ زندگی کا ساتھی تلاش کرنے میں مدد کرتا ہے۔ اپنی دلچسپی رجسٹر کرنے کے لیے یہ فارم پُر کریں۔ آپ کی معلومات نجی رہتی ہیں اور صرف دونوں خاندانوں کی باہمی رضامندی کے بعد ہی شیئر کی جاتی ہیں۔">Qalbayn helps you find a life partner the right way, with care, privacy, and family involvement at every step. Fill out this form to register your interest. Your information stays private and is shared only after mutual agreement between both families.</p>
+      <p data-en="Please provide accurate and honest details, as this will help us understand your preferences better and identify a more suitable match for you." data-ur="براہ کرم درست اور دیانتدارانہ تفصیلات فراہم کریں، اس سے ہمیں آپ کی ترجیحات کو بہتر طور پر سمجھنے اور آپ کے لیے زیادہ موزوں رشتہ تلاش کرنے میں مدد ملے گی۔">Please provide accurate and honest details, as this will help us understand your preferences better and identify a more suitable match for you.</p>
+      <p data-en="The form takes approximately 3–4 minutes to complete." data-ur="یہ فارم مکمل کرنے میں تقریباً 3 سے 4 منٹ لگتے ہیں۔">The form takes approximately 3–4 minutes to complete.</p>
+      <p data-en="Registration is completely free. Once you submit the form, our team will personally review your responses and reach out to you." data-ur="رجسٹریشن مکمل طور پر مفت ہے۔ فارم جمع کروانے کے بعد، ہماری ٹیم ذاتی طور پر آپ کے جوابات کا جائزہ لے کر آپ سے رابطہ کرے گی۔">Registration is completely free. Once you submit the form, our team will personally review your responses and reach out to you.</p>
     </div>
 
     <div class="progress-wrap">
@@ -176,474 +215,518 @@
 
       <!-- ===================== STEP 1 ===================== -->
       <div class="step active" data-step="1">
-        <div class="step-desc">Tell us a little about yourself and your family.</div>
+        <div class="step-desc" data-en="Tell us a little about yourself and your family." data-ur="ہمیں اپنے اور اپنے خاندان کے بارے میں کچھ بتائیں۔">Tell us a little about yourself and your family.</div>
 
         <div class="field">
-          <label for="fullName">Full Name<span class="req">*</span></label>
+          <label for="registeringFor"><span data-en="Registering for" data-ur="کس کے لیے رجسٹر کر رہے ہیں">Registering for</span><span class="req">*</span></label>
+          <select id="registeringFor" name="registeringFor" required>
+            <option value="" disabled selected data-en="Select an option" data-ur="ایک آپشن منتخب کریں">Select an option</option>
+            <option value="Self" data-en="Self" data-ur="خود">Self</option>
+            <option value="Daughter" data-en="Daughter" data-ur="بیٹی">Daughter</option>
+            <option value="Son" data-en="Son" data-ur="بیٹا">Son</option>
+            <option value="Sister" data-en="Sister" data-ur="بہن">Sister</option>
+            <option value="Brother" data-en="Brother" data-ur="بھائی">Brother</option>
+            <option value="Relative/Friend" data-en="Relative/Friend" data-ur="رشتہ دار/دوست">Relative/Friend</option>
+          </select>
+          <div class="error-msg" data-en="Please select who you are registering for." data-ur="براہ کرم منتخب کریں کہ آپ کس کے لیے رجسٹر کر رہے ہیں۔">Please select who you are registering for.</div>
+        </div>
+
+        <div class="field">
+          <label for="fullName"><span data-en="Full Name" data-ur="مکمل نام">Full Name</span><span class="req">*</span></label>
           <input type="text" id="fullName" name="fullName" required>
-          <div class="error-msg">Please enter your full name.</div>
+          <div class="error-msg" data-en="Please enter your full name." data-ur="براہ کرم اپنا مکمل نام درج کریں۔">Please enter your full name.</div>
         </div>
 
         <div class="field">
-          <label for="contact">Contact number (WhatsApp Number)<span class="req">*</span></label>
-          <input type="tel" id="contact" name="contact" inputmode="numeric" maxlength="10" placeholder="10-digit number" required>
-          <div class="help">This is for ease of communication. Your privacy will be maintained, and you will receive updates on WhatsApp.</div>
-          <div class="error-msg">Please enter a valid 10-digit WhatsApp number.</div>
+          <label for="contact"><span data-en="Contact number (WhatsApp Number)" data-ur="رابطہ نمبر (واٹس ایپ نمبر)">Contact number (WhatsApp Number)</span><span class="req">*</span></label>
+          <input type="tel" id="contact" name="contact" inputmode="numeric" maxlength="10" placeholder="10-digit number" data-ph-en="10-digit number" data-ph-ur="10 ہندسوں کا نمبر" required>
+          <div class="help" data-en="This is for ease of communication. Your privacy will be maintained, and you will receive updates on WhatsApp." data-ur="یہ رابطے میں آسانی کے لیے ہے۔ آپ کی رازداری برقرار رکھی جائے گی، اور آپ کو واٹس ایپ پر اپڈیٹس موصول ہوں گی۔">This is for ease of communication. Your privacy will be maintained, and you will receive updates on WhatsApp.</div>
+          <div class="error-msg" data-en="Please enter a valid 10-digit WhatsApp number." data-ur="براہ کرم درست 10 ہندسوں کا واٹس ایپ نمبر درج کریں۔">Please enter a valid 10-digit WhatsApp number.</div>
         </div>
 
         <div class="field">
-          <label>Gender<span class="req">*</span></label>
+          <label><span data-en="Gender" data-ur="صنف">Gender</span><span class="req">*</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="gender" value="Male" required> Male</label>
-            <label class="radio-option"><input type="radio" name="gender" value="Female"> Female</label>
+            <label class="radio-option"><input type="radio" name="gender" value="Male" required> <span data-en="Male" data-ur="مرد">Male</span></label>
+            <label class="radio-option"><input type="radio" name="gender" value="Female"> <span data-en="Female" data-ur="عورت">Female</span></label>
           </div>
-          <div class="error-msg">Please select a gender.</div>
+          <div class="error-msg" data-en="Please select a gender." data-ur="براہ کرم صنف منتخب کریں۔">Please select a gender.</div>
         </div>
 
         <div class="field">
-          <label for="dob">Date of Birth<span class="req">*</span></label>
+          <label for="dob"><span data-en="Date of Birth" data-ur="تاریخ پیدائش">Date of Birth</span><span class="req">*</span></label>
           <input type="date" id="dob" name="dob" required>
-          <div class="error-msg">Please enter your date of birth.</div>
+          <div class="help" id="ageDisplay"></div>
+          <div class="error-msg" data-en="Please enter your date of birth." data-ur="براہ کرم اپنی تاریخ پیدائش درج کریں۔">Please enter your date of birth.</div>
+          <div class="error-msg" id="err-dob-age" data-en="You must be at least 18 years old to register." data-ur="رجسٹریشن کے لیے آپ کی عمر کم از کم 18 سال ہونی چاہیے۔">You must be at least 18 years old to register.</div>
         </div>
 
         <div class="field">
-          <label>Marital Status<span class="req">*</span></label>
+          <label><span data-en="Marital Status" data-ur="ازدواجی حیثیت">Marital Status</span><span class="req">*</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="maritalStatus" value="Never Married" required> Never Married</label>
-            <label class="radio-option"><input type="radio" name="maritalStatus" value="Divorced"> Divorced</label>
-            <label class="radio-option"><input type="radio" name="maritalStatus" value="Widowed"> Widowed</label>
+            <label class="radio-option"><input type="radio" name="maritalStatus" value="Never Married" required> <span data-en="Never Married" data-ur="کبھی شادی نہیں ہوئی">Never Married</span></label>
+            <label class="radio-option"><input type="radio" name="maritalStatus" value="Divorced"> <span data-en="Divorced" data-ur="طلاق یافتہ">Divorced</span></label>
+            <label class="radio-option"><input type="radio" name="maritalStatus" value="Widowed"> <span data-en="Widowed" data-ur="بیوہ/بیوہ مرد">Widowed</span></label>
           </div>
-          <div class="error-msg">Please select a marital status.</div>
+          <div class="error-msg" data-en="Please select a marital status." data-ur="براہ کرم ازدواجی حیثیت منتخب کریں۔">Please select a marital status.</div>
         </div>
 
         <div class="field">
-          <label for="city">Current city of residence<span class="req">*</span></label>
+          <label for="city"><span data-en="Current city of residence" data-ur="موجودہ رہائشی شہر">Current city of residence</span><span class="req">*</span></label>
           <input type="text" id="city" name="city" required>
-          <div class="error-msg">Please enter your city.</div>
+          <div class="error-msg" data-en="Please enter your city." data-ur="براہ کرم اپنا شہر درج کریں۔">Please enter your city.</div>
         </div>
 
         <div class="field">
-          <label for="fatherName">Father's Name / Guardian's Name<span class="req">*</span></label>
+          <label for="fatherName"><span data-en="Father's Name / Guardian's Name" data-ur="والد کا نام / سرپرست کا نام">Father's Name / Guardian's Name</span><span class="req">*</span></label>
           <input type="text" id="fatherName" name="fatherName" required>
-          <div class="error-msg">Please enter this field.</div>
+          <div class="error-msg" data-en="Please enter this field." data-ur="براہ کرم یہ خانہ پُر کریں۔">Please enter this field.</div>
         </div>
 
         <div class="field">
-          <label for="fatherOccupation">Father's Occupation / Guardian's Occupation</label>
+          <label for="fatherOccupation"><span data-en="Father's Occupation / Guardian's Occupation" data-ur="والد کا پیشہ / سرپرست کا پیشہ">Father's Occupation / Guardian's Occupation</span></label>
           <input type="text" id="fatherOccupation" name="fatherOccupation">
         </div>
 
         <div class="field">
-          <label for="motherName">Mother's Name<span class="req">*</span></label>
+          <label for="motherName"><span data-en="Mother's Name" data-ur="والدہ کا نام">Mother's Name</span><span class="req">*</span></label>
           <input type="text" id="motherName" name="motherName" required>
-          <div class="error-msg">Please enter this field.</div>
+          <div class="error-msg" data-en="Please enter this field." data-ur="براہ کرم یہ خانہ پُر کریں۔">Please enter this field.</div>
         </div>
 
         <div class="field">
-          <label for="motherOccupation">Mother's Occupation</label>
+          <label for="motherOccupation"><span data-en="Mother's Occupation" data-ur="والدہ کا پیشہ">Mother's Occupation</span></label>
           <input type="text" id="motherOccupation" name="motherOccupation">
         </div>
 
         <div class="field">
-          <label for="siblings">Siblings</label>
-          <textarea id="siblings" name="siblings" rows="2"></textarea>
-          <div class="help">Please mention the number of siblings and marital status. Example: "2 brothers — both married; 1 sister — unmarried."</div>
+          <label for="siblings"><span data-en="Siblings" data-ur="بہن بھائی">Siblings</span></label>
+          <textarea id="siblings" name="siblings" rows="2" placeholder="Please mention the number of siblings and marital status. Example: &quot;2 brothers — both married; 1 sister — unmarried.&quot;" data-ph-en="Please mention the number of siblings and marital status. Example: &quot;2 brothers — both married; 1 sister — unmarried.&quot;" data-ph-ur="براہ کرم بہن بھائیوں کی تعداد اور ازدواجی حیثیت بتائیں۔ مثال: &quot;2 بھائی — دونوں شادی شدہ؛ 1 بہن — غیر شادی شدہ۔&quot;"></textarea>
         </div>
 
         <div class="field">
-          <label for="nativePlace">Native Place / Hometown<span class="req">*</span></label>
+          <label for="nativePlace"><span data-en="Native Place / Hometown" data-ur="آبائی جگہ / آبائی شہر">Native Place / Hometown</span><span class="req">*</span></label>
           <input type="text" id="nativePlace" name="nativePlace" required>
-          <div class="error-msg">Please enter this field.</div>
+          <div class="error-msg" data-en="Please enter this field." data-ur="براہ کرم یہ خانہ پُر کریں۔">Please enter this field.</div>
         </div>
 
         <div class="field">
-          <label for="motherTongue">Mother Tongue (Language spoken at home)<span class="req">*</span></label>
+          <label for="motherTongue"><span data-en="Mother Tongue (Language spoken at home)" data-ur="مادری زبان (گھر میں بولی جانے والی زبان)">Mother Tongue (Language spoken at home)</span><span class="req">*</span></label>
           <input type="text" id="motherTongue" name="motherTongue" required>
-          <div class="error-msg">Please enter this field.</div>
+          <div class="error-msg" data-en="Please enter this field." data-ur="براہ کرم یہ خانہ پُر کریں۔">Please enter this field.</div>
         </div>
       </div>
 
       <!-- ===================== STEP 2 ===================== -->
       <div class="step" data-step="2">
-        <div class="step-desc">Your education, work, and Islamic learning background.</div>
+        <div class="step-desc" data-en="Your education, work, and Islamic learning background." data-ur="آپ کی تعلیم، پیشہ اور دینی تعلیم کا پس منظر۔">Your education, work, and Islamic learning background.</div>
 
         <div class="field">
-          <label>Highest Qualification<span class="req">*</span></label>
+          <label><span data-en="Highest Qualification" data-ur="اعلیٰ ترین تعلیمی قابلیت">Highest Qualification</span><span class="req">*</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="qualification" value="High School" required> High School</label>
-            <label class="radio-option"><input type="radio" name="qualification" value="12th/PUC"> 12th/PUC</label>
-            <label class="radio-option"><input type="radio" name="qualification" value="Diploma"> Diploma</label>
-            <label class="radio-option"><input type="radio" name="qualification" value="Bachelor's degree"> Bachelor's degree</label>
-            <label class="radio-option"><input type="radio" name="qualification" value="Master's degree"> Master's degree</label>
-            <label class="radio-option"><input type="radio" name="qualification" value="Doctorate"> Doctorate</label>
-            <label class="radio-option"><input type="radio" name="qualification" value="Other"> Other</label>
+            <label class="radio-option"><input type="radio" name="qualification" value="High School" required> <span data-en="High School" data-ur="ہائی اسکول">High School</span></label>
+            <label class="radio-option"><input type="radio" name="qualification" value="12th/PUC"> <span data-en="12th/PUC" data-ur="12ویں / پی یو سی">12th/PUC</span></label>
+            <label class="radio-option"><input type="radio" name="qualification" value="Diploma"> <span data-en="Diploma" data-ur="ڈپلومہ">Diploma</span></label>
+            <label class="radio-option"><input type="radio" name="qualification" value="Bachelor's degree"> <span data-en="Bachelor's degree" data-ur="بیچلر ڈگری">Bachelor's degree</span></label>
+            <label class="radio-option"><input type="radio" name="qualification" value="Master's degree"> <span data-en="Master's degree" data-ur="ماسٹر ڈگری">Master's degree</span></label>
+            <label class="radio-option"><input type="radio" name="qualification" value="Doctorate"> <span data-en="Doctorate" data-ur="ڈاکٹریٹ">Doctorate</span></label>
+            <label class="radio-option"><input type="radio" name="qualification" value="Other"> <span data-en="Other" data-ur="دیگر">Other</span></label>
           </div>
-          <div class="error-msg">Please select your highest qualification.</div>
+          <div class="error-msg" data-en="Please select your highest qualification." data-ur="براہ کرم اپنی اعلیٰ ترین تعلیمی قابلیت منتخب کریں۔">Please select your highest qualification.</div>
+        </div>
+
+        <div class="field conditional" id="fieldOfStudyField">
+          <label for="fieldOfStudy"><span data-en="Course / Field of Study / Specialization" data-ur="کورس / شعبہ تعلیم / تخصص">Course / Field of Study / Specialization</span></label>
+          <input type="text" id="fieldOfStudy" name="fieldOfStudy" placeholder="Please enter the course or field you studied or Specialization" data-ph-en="Please enter the course or field you studied or Specialization" data-ph-ur="براہ کرم وہ کورس یا شعبہ تعلیم / تخصص درج کریں جو آپ نے مکمل کیا ہے">
         </div>
 
         <div class="field">
-          <label for="occupation">Current Occupation</label>
-          <input type="text" id="occupation" name="occupation">
+          <label for="occupation"><span data-en="Current Occupation" data-ur="موجودہ پیشہ">Current Occupation</span><span class="req">*</span></label>
+          <input type="text" id="occupation" name="occupation" required>
+          <div class="error-msg" data-en="Please enter your current occupation." data-ur="براہ کرم اپنا موجودہ پیشہ درج کریں۔">Please enter your current occupation.</div>
         </div>
 
         <div class="field">
-          <label>Monthly Income Range</label>
+          <label><span data-en="Monthly Income Range" data-ur="ماہانہ آمدنی کی حد">Monthly Income Range</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="income" value="Prefer Not to say"> Prefer not to say</label>
-            <label class="radio-option"><input type="radio" name="income" value="Below ₹25,000"> Below ₹25,000</label>
-            <label class="radio-option"><input type="radio" name="income" value="₹25,000–₹50,000"> ₹25,000–₹50,000</label>
-            <label class="radio-option"><input type="radio" name="income" value="₹50,000–₹1 lakh"> ₹50,000–₹1 lakh</label>
-            <label class="radio-option"><input type="radio" name="income" value="₹1 lakh+"> ₹1 lakh+</label>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Have you completed Noorani Qaida?</label>
-          <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="nooraniQaida" value="Yes, completed"> Yes, completed</label>
-            <label class="radio-option"><input type="radio" name="nooraniQaida" value="Started but not completed"> Started but not completed</label>
-            <label class="radio-option"><input type="radio" name="nooraniQaida" value="No"> No</label>
+            <label class="radio-option"><input type="radio" name="income" value="Prefer Not to say"> <span data-en="Prefer not to say" data-ur="بتانا نہیں چاہتے">Prefer not to say</span></label>
+            <label class="radio-option"><input type="radio" name="income" value="Below ₹25,000"> <span data-en="Below ₹25,000" data-ur="₹25,000 سے کم">Below ₹25,000</span></label>
+            <label class="radio-option"><input type="radio" name="income" value="₹25,000–₹50,000"> <span data-en="₹25,000–₹50,000" data-ur="₹25,000–₹50,000">₹25,000–₹50,000</span></label>
+            <label class="radio-option"><input type="radio" name="income" value="₹50,000–₹1 lakh"> <span data-en="₹50,000–₹1 lakh" data-ur="₹50,000–₹1 لاکھ">₹50,000–₹1 lakh</span></label>
+            <label class="radio-option"><input type="radio" name="income" value="₹1 lakh+"> <span data-en="₹1 lakh+" data-ur="₹1 لاکھ سے زیادہ">₹1 lakh+</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>What is your ability to read the Quran in Arabic?<span class="req">*</span></label>
+          <label><span data-en="Have you completed Noorani Qaida?" data-ur="کیا آپ نے نورانی قاعدہ مکمل کیا ہے؟">Have you completed Noorani Qaida?</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="quranReading" value="I can read the Quran fluently" required> Fluently</label>
-            <label class="radio-option"><input type="radio" name="quranReading" value="I can read the Quran but slowly"> Slowly</label>
-            <label class="radio-option"><input type="radio" name="quranReading" value="I cannot read Arabic"> I cannot read Arabic</label>
+            <label class="radio-option"><input type="radio" name="nooraniQaida" value="Yes, completed"> <span data-en="Yes, completed" data-ur="جی ہاں، مکمل کر لیا">Yes, completed</span></label>
+            <label class="radio-option"><input type="radio" name="nooraniQaida" value="Started but not completed"> <span data-en="Started but not completed" data-ur="شروع کیا لیکن مکمل نہیں کیا">Started but not completed</span></label>
+            <label class="radio-option"><input type="radio" name="nooraniQaida" value="No"> <span data-en="No" data-ur="نہیں">No</span></label>
           </div>
-          <div class="error-msg">Please select an option.</div>
         </div>
 
         <div class="field">
-          <label>What is your highest level of Islamic education?<span class="req">*</span></label>
+          <label><span data-en="What is your ability to read the Quran in Arabic?" data-ur="عربی میں قرآن پڑھنے کی آپ کی صلاحیت کیا ہے؟">What is your ability to read the Quran in Arabic?</span><span class="req">*</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="islamicEducation" value="Basic Islamic studies / Madrasah" required> Basic / Madrasah</label>
-            <label class="radio-option"><input type="radio" name="islamicEducation" value="Alim/Alima course - completed"> Alim/Alima — completed</label>
-            <label class="radio-option"><input type="radio" name="islamicEducation" value="Alim/Alima course - currently studying"> Alim/Alima — studying</label>
-            <label class="radio-option"><input type="radio" name="islamicEducation" value="Hifz / Hafizah"> Hifz / Hafizah</label>
-            <label class="radio-option"><input type="radio" name="islamicEducation" value="No formal Islamic education"> No formal education</label>
-            <label class="radio-option"><input type="radio" name="islamicEducation" value="Other"> Other</label>
+            <label class="radio-option"><input type="radio" name="quranReading" value="I can read the Quran fluently" required> <span data-en="Fluently" data-ur="روانی سے">Fluently</span></label>
+            <label class="radio-option"><input type="radio" name="quranReading" value="I can read the Quran but slowly"> <span data-en="Slowly" data-ur="آہستہ آہستہ">Slowly</span></label>
+            <label class="radio-option"><input type="radio" name="quranReading" value="I cannot read Arabic"> <span data-en="I cannot read Arabic" data-ur="میں عربی نہیں پڑھ سکتا/سکتی">I cannot read Arabic</span></label>
           </div>
-          <div class="error-msg">Please select an option.</div>
+          <div class="error-msg" data-en="Please select an option." data-ur="براہ کرم ایک آپشن منتخب کریں۔">Please select an option.</div>
+        </div>
+
+        <div class="field">
+          <label><span data-en="What is your highest level of Islamic education?" data-ur="آپ کی دینی تعلیم کی اعلیٰ ترین سطح کیا ہے؟">What is your highest level of Islamic education?</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="islamicEducation" value="Basic Islamic studies / Madrasah"> <span data-en="Basic / Madrasah" data-ur="بنیادی / مدرسہ">Basic / Madrasah</span></label>
+            <label class="radio-option"><input type="radio" name="islamicEducation" value="Alim/Alima course - completed"> <span data-en="Alim/Alima — completed" data-ur="عالم/عالمہ — مکمل">Alim/Alima — completed</span></label>
+            <label class="radio-option"><input type="radio" name="islamicEducation" value="Alim/Alima course - currently studying"> <span data-en="Alim/Alima — studying" data-ur="عالم/عالمہ — زیرِ تعلیم">Alim/Alima — studying</span></label>
+            <label class="radio-option"><input type="radio" name="islamicEducation" value="Hifz / Hafizah"> <span data-en="Hifz / Hafizah" data-ur="حفظ / حافظہ">Hifz / Hafizah</span></label>
+            <label class="radio-option"><input type="radio" name="islamicEducation" value="No formal Islamic education"> <span data-en="No formal education" data-ur="کوئی رسمی دینی تعلیم نہیں">No formal education</span></label>
+            <label class="radio-option"><input type="radio" name="islamicEducation" value="Other"> <span data-en="Other" data-ur="دیگر">Other</span></label>
+          </div>
+          <div class="error-msg" data-en="Please select an option." data-ur="براہ کرم ایک آپشن منتخب کریں۔">Please select an option.</div>
         </div>
       </div>
 
       <!-- ===================== STEP 3 ===================== -->
       <div class="step" data-step="3">
-        <div class="step-desc">A few questions about your religious practice.</div>
+        <div class="step-desc" data-en="A few questions about your religious practice." data-ur="آپ کے دینی معمولات کے بارے میں چند سوالات۔">A few questions about your religious practice.</div>
 
         <div class="field">
-          <label>Sect<span class="req">*</span></label>
+          <label><span data-en="Sect" data-ur="مسلک/فرقہ">Sect</span><span class="req">*</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="sect" value="Sunni" required> Sunni</label>
-            <label class="radio-option"><input type="radio" name="sect" value="Shia"> Shia</label>
-            <label class="radio-option"><input type="radio" name="sect" value="Other"> Other</label>
+            <label class="radio-option"><input type="radio" name="sect" value="Sunni" required> <span data-en="Sunni" data-ur="سنی">Sunni</span></label>
+            <label class="radio-option"><input type="radio" name="sect" value="Shia"> <span data-en="Shia" data-ur="شیعہ">Shia</span></label>
+            <label class="radio-option"><input type="radio" name="sect" value="Other"> <span data-en="Other" data-ur="دیگر">Other</span></label>
           </div>
-          <div class="error-msg">Please select a sect.</div>
+          <div class="error-msg" data-en="Please select a sect." data-ur="براہ کرم مسلک/فرقہ منتخب کریں۔">Please select a sect.</div>
         </div>
 
         <div class="field">
-          <label>Maslak / School of Thought<span class="req">*</span></label>
+          <label><span data-en="Maslak / School of Thought" data-ur="مسلک / فکری مکتب">Maslak / School of Thought</span><span class="req">*</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="maslak" value="Barelvi" required> Barelvi</label>
-            <label class="radio-option"><input type="radio" name="maslak" value="Deobandi / Tablighi Jamat"> Deobandi / Tablighi Jamat</label>
-            <label class="radio-option"><input type="radio" name="maslak" value="Ahl-e-Hadith / Salafi"> Ahl-e-Hadith / Salafi</label>
-            <label class="radio-option"><input type="radio" name="maslak" value="Not affiliated with a specific school of thought"> Not affiliated</label>
-            <label class="radio-option"><input type="radio" name="maslak" value="Other"> Other</label>
+            <label class="radio-option"><input type="radio" name="maslak" value="Barelvi" required> <span data-en="Barelvi" data-ur="بریلوی">Barelvi</span></label>
+            <label class="radio-option"><input type="radio" name="maslak" value="Deobandi / Tablighi Jamat"> <span data-en="Deobandi / Tablighi Jamat" data-ur="دیوبندی / تبلیغی جماعت">Deobandi / Tablighi Jamat</span></label>
+            <label class="radio-option"><input type="radio" name="maslak" value="Ahl-e-Hadith / Salafi"> <span data-en="Ahl-e-Hadith / Salafi" data-ur="اہلِ حدیث / سلفی">Ahl-e-Hadith / Salafi</span></label>
+            <label class="radio-option"><input type="radio" name="maslak" value="Not affiliated with a specific school of thought"> <span data-en="Not affiliated" data-ur="کسی مسلک سے وابستہ نہیں">Not affiliated</span></label>
+            <label class="radio-option"><input type="radio" name="maslak" value="Other"> <span data-en="Other" data-ur="دیگر">Other</span></label>
           </div>
-          <div class="error-msg">Please select an option.</div>
+          <div class="error-msg" data-en="Please select an option." data-ur="براہ کرم ایک آپشن منتخب کریں۔">Please select an option.</div>
         </div>
 
         <div class="field">
-          <label>Do you pray five times a day?</label>
+          <label><span data-en="Do you pray five times a day?" data-ur="کیا آپ پانچ وقت کی نماز پڑھتے ہیں؟">Do you pray five times a day?</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="prayer" value="Yes, regularly"> Yes, regularly</label>
-            <label class="radio-option"><input type="radio" name="prayer" value="Usually"> Usually</label>
-            <label class="radio-option"><input type="radio" name="prayer" value="Sometimes"> Sometimes</label>
-            <label class="radio-option"><input type="radio" name="prayer" value="Rarely"> Rarely</label>
+            <label class="radio-option"><input type="radio" name="prayer" value="Yes, regularly"> <span data-en="Yes, regularly" data-ur="جی ہاں، باقاعدگی سے">Yes, regularly</span></label>
+            <label class="radio-option"><input type="radio" name="prayer" value="Usually"> <span data-en="Usually" data-ur="اکثر">Usually</span></label>
+            <label class="radio-option"><input type="radio" name="prayer" value="Sometimes"> <span data-en="Sometimes" data-ur="کبھی کبھار">Sometimes</span></label>
+            <label class="radio-option"><input type="radio" name="prayer" value="Rarely"> <span data-en="Rarely" data-ur="شاذ و نادر">Rarely</span></label>
           </div>
         </div>
 
         <div class="field conditional" id="beardField">
-          <label>For men: Do you keep a beard in accordance with Sunnah?</label>
+          <label><span data-en="Do you keep a beard in accordance with Sunnah?" data-ur="کیا آپ سنت کے مطابق داڑھی رکھتے ہیں؟">Do you keep a beard in accordance with Sunnah?</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="beard" value="Yes"> Yes</label>
-            <label class="radio-option"><input type="radio" name="beard" value="Yes, but I keep it trimmed"> Yes, but trimmed</label>
-            <label class="radio-option"><input type="radio" name="beard" value="No"> No</label>
+            <label class="radio-option"><input type="radio" name="beard" value="Yes"> <span data-en="Yes" data-ur="جی ہاں">Yes</span></label>
+            <label class="radio-option"><input type="radio" name="beard" value="Yes, but I keep it trimmed"> <span data-en="Yes, but trimmed" data-ur="جی ہاں، لیکن تراشی ہوئی">Yes, but trimmed</span></label>
+            <label class="radio-option"><input type="radio" name="beard" value="No"> <span data-en="No" data-ur="نہیں">No</span></label>
           </div>
         </div>
 
         <div class="field conditional" id="hijabField">
-          <label>For women: Do you observe Hijab?</label>
+          <label><span data-en="Do you observe Hijab?" data-ur="کیا آپ حجاب کرتی ہیں؟">Do you observe Hijab?</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="hijab" value="Yes, regularly"> Yes, regularly</label>
-            <label class="radio-option"><input type="radio" name="hijab" value="Yes, sometimes"> Yes, sometimes</label>
-            <label class="radio-option"><input type="radio" name="hijab" value="No"> No</label>
+            <label class="radio-option"><input type="radio" name="hijab" value="Yes, regularly"> <span data-en="Yes, regularly" data-ur="جی ہاں، باقاعدگی سے">Yes, regularly</span></label>
+            <label class="radio-option"><input type="radio" name="hijab" value="Yes, sometimes"> <span data-en="Yes, sometimes" data-ur="جی ہاں، کبھی کبھار">Yes, sometimes</span></label>
+            <label class="radio-option"><input type="radio" name="hijab" value="No"> <span data-en="No" data-ur="نہیں">No</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>Do you fast during Ramadan?</label>
+          <label><span data-en="Do you fast during Ramadan?" data-ur="کیا آپ رمضان میں روزہ رکھتے ہیں؟">Do you fast during Ramadan?</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="fasting" value="Yes, regularly"> Yes, regularly</label>
-            <label class="radio-option"><input type="radio" name="fasting" value="Usually"> Usually</label>
-            <label class="radio-option"><input type="radio" name="fasting" value="Sometimes"> Sometimes</label>
-            <label class="radio-option"><input type="radio" name="fasting" value="Rarely"> Rarely</label>
+            <label class="radio-option"><input type="radio" name="fasting" value="Yes, regularly"> <span data-en="Yes, regularly" data-ur="جی ہاں، باقاعدگی سے">Yes, regularly</span></label>
+            <label class="radio-option"><input type="radio" name="fasting" value="Usually"> <span data-en="Usually" data-ur="اکثر">Usually</span></label>
+            <label class="radio-option"><input type="radio" name="fasting" value="Sometimes"> <span data-en="Sometimes" data-ur="کبھی کبھار">Sometimes</span></label>
+            <label class="radio-option"><input type="radio" name="fasting" value="Rarely"> <span data-en="Rarely" data-ur="شاذ و نادر">Rarely</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>How often do you read or listen to the Quran?</label>
+          <label><span data-en="How often do you read or listen to the Quran?" data-ur="آپ کتنی بار قرآن پڑھتے یا سنتے ہیں؟">How often do you read or listen to the Quran?</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="quranFrequency" value="Daily"> Daily</label>
-            <label class="radio-option"><input type="radio" name="quranFrequency" value="Several times a week"> Several times a week</label>
-            <label class="radio-option"><input type="radio" name="quranFrequency" value="Occasionally"> Occasionally</label>
-            <label class="radio-option"><input type="radio" name="quranFrequency" value="Rarely"> Rarely</label>
-            <label class="radio-option"><input type="radio" name="quranFrequency" value="Not currently"> Not currently</label>
+            <label class="radio-option"><input type="radio" name="quranFrequency" value="Daily"> <span data-en="Daily" data-ur="روزانہ">Daily</span></label>
+            <label class="radio-option"><input type="radio" name="quranFrequency" value="Several times a week"> <span data-en="Several times a week" data-ur="ہفتے میں کئی بار">Several times a week</span></label>
+            <label class="radio-option"><input type="radio" name="quranFrequency" value="Occasionally"> <span data-en="Occasionally" data-ur="کبھی کبھار">Occasionally</span></label>
+            <label class="radio-option"><input type="radio" name="quranFrequency" value="Rarely"> <span data-en="Rarely" data-ur="شاذ و نادر">Rarely</span></label>
+            <label class="radio-option"><input type="radio" name="quranFrequency" value="Not currently"> <span data-en="Not currently" data-ur="فی الحال نہیں">Not currently</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label><span data-en="Which Islamic scholars do you listen to?" data-ur="آپ کن دینی علماء کو سنتے ہیں؟">Which Islamic scholars do you listen to?</span></label>
+          <div class="checkbox-group">
+            <label class="checkbox-option"><input type="checkbox" name="scholars" value="Mufti Menk"> <span data-en="Mufti Menk" data-ur="مفتی مینک">Mufti Menk</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="scholars" value="Maulana Tariq Jameel"> <span data-en="Maulana Tariq Jameel" data-ur="مولانا طارق جمیل">Maulana Tariq Jameel</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="scholars" value="Nouman Ali Khan"> <span data-en="Nouman Ali Khan" data-ur="نعمان علی خان">Nouman Ali Khan</span></label>
+          </div>
+          <div class="help" data-en="You can select more than one option." data-ur="آپ ایک سے زیادہ آپشن منتخب کر سکتے ہیں۔">You can select more than one option.</div>
+          <div class="field" style="margin-top:14px;">
+            <label for="scholarsOther"><span data-en="Other scholar(s) — if not listed above" data-ur="دیگر علماء — اگر اوپر درج نہ ہوں">Other scholar(s) — if not listed above</span></label>
+            <input type="text" id="scholarsOther" name="scholarsOther" placeholder="Enter name(s), separated by commas" data-ph-en="Enter name(s), separated by commas" data-ph-ur="نام درج کریں، کوما سے الگ کریں">
           </div>
         </div>
       </div>
 
       <!-- ===================== STEP 4 ===================== -->
       <div class="step" data-step="4">
-        <div class="step-desc">Help us understand your everyday life and personality.</div>
+        <div class="step-desc" data-en="Help us understand your everyday life and personality." data-ur="ہمیں اپنی روزمرہ زندگی اور شخصیت کے بارے میں بتائیں۔">Help us understand your everyday life and personality.</div>
 
         <div class="field">
-          <label>Diet<span class="req">*</span></label>
+          <label><span data-en="Diet" data-ur="غذا">Diet</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="diet" value="Vegetarian" required> Vegetarian</label>
-            <label class="radio-option"><input type="radio" name="diet" value="Non-Vegetarian"> Non-Vegetarian</label>
-          </div>
-          <div class="error-msg">Please select an option.</div>
-        </div>
-
-        <div class="field">
-          <label>Do you smoke?</label>
-          <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="smoke" value="Yes"> Yes</label>
-            <label class="radio-option"><input type="radio" name="smoke" value="Occasionally"> Occasionally</label>
-            <label class="radio-option"><input type="radio" name="smoke" value="No"> No</label>
+            <label class="radio-option"><input type="radio" name="diet" value="Vegetarian"> <span data-en="Vegetarian" data-ur="سبزی خور">Vegetarian</span></label>
+            <label class="radio-option"><input type="radio" name="diet" value="Non-Vegetarian"> <span data-en="Non-Vegetarian" data-ur="غیر سبزی خور">Non-Vegetarian</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>How would you describe your social personality?</label>
+          <label><span data-en="How would you describe your social personality?" data-ur="آپ اپنی سماجی شخصیت کو کیسے بیان کریں گے؟">How would you describe your social personality?</span><span class="req">*</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="personality" value="Very introverted, I prefer a quiet life and small circle"> Very introverted</label>
-            <label class="radio-option"><input type="radio" name="personality" value="Balanced, comfortable in both settings"> Balanced</label>
-            <label class="radio-option"><input type="radio" name="personality" value="Very extroverted, I enjoy being socially active"> Very extroverted</label>
+            <label class="radio-option"><input type="radio" name="personality" value="Very introverted, I prefer a quiet life and small circle" required> <span data-en="Very introverted, I prefer a quiet life and small circle" data-ur="انتہائی خاموش طبع، میں پرسکون زندگی اور چھوٹا حلقہ پسند کرتا/کرتی ہوں">Very introverted, I prefer a quiet life and small circle</span></label>
+            <label class="radio-option"><input type="radio" name="personality" value="Balanced, comfortable in both settings"> <span data-en="Balanced, comfortable in both settings" data-ur="متوازن، دونوں طرح کے ماحول میں آسانی محسوس کرتا/کرتی ہوں">Balanced, comfortable in both settings</span></label>
+            <label class="radio-option"><input type="radio" name="personality" value="Very extroverted, I enjoy being socially active"> <span data-en="Very extroverted, I enjoy being socially active" data-ur="انتہائی ملنسار، سماجی طور پر متحرک رہنا پسند کرتا/کرتی ہوں">Very extroverted, I enjoy being socially active</span></label>
           </div>
+          <div class="error-msg" data-en="Please select an option." data-ur="براہ کرم ایک آپشن منتخب کریں۔">Please select an option.</div>
         </div>
 
         <div class="field">
-          <label for="aboutYou">Tell us about yourself</label>
-          <textarea id="aboutYou" name="aboutYou" rows="3"></textarea>
-          <div class="help">In a few sentences, share your personality, interests, values, daily life, strengths, or anything else you feel would help us understand you better.</div>
+          <label for="aboutYou"><span data-en="Tell us about yourself" data-ur="اپنے بارے میں بتائیں">Tell us about yourself</span></label>
+          <textarea id="aboutYou" name="aboutYou" rows="3" placeholder="In a few sentences, share your personality, interests, values, daily life, strengths, or anything else you feel would help us understand you better." data-ph-en="In a few sentences, share your personality, interests, values, daily life, strengths, or anything else you feel would help us understand you better." data-ph-ur="چند جملوں میں اپنی شخصیت، دلچسپیاں، اقدار، روزمرہ زندگی، خوبیاں، یا کوئی اور بات بتائیں جو ہمیں آپ کو بہتر سمجھنے میں مدد دے۔"></textarea>
         </div>
 
         <div class="field">
-          <label for="futureGoals">What are your future goals and ambitions?</label>
-          <textarea id="futureGoals" name="futureGoals" rows="3"></textarea>
-          <div class="help">Tell us about your career aspirations, personal goals, where you would like to live, and the kind of life you hope to build in the next 5–10 years.</div>
+          <label for="futureGoals"><span data-en="What are your future goals and ambitions?" data-ur="آپ کے مستقبل کے اہداف اور خواہشات کیا ہیں؟">What are your future goals and ambitions?</span></label>
+          <textarea id="futureGoals" name="futureGoals" rows="3" placeholder="Tell us about your career aspirations, personal goals, where you would like to live, and the kind of life you hope to build in the next 5–10 years." data-ph-en="Tell us about your career aspirations, personal goals, where you would like to live, and the kind of life you hope to build in the next 5–10 years." data-ph-ur="اپنے کیریئر کے عزائم، ذاتی اہداف، آپ کہاں رہنا چاہیں گے، اور اگلے 5 سے 10 سالوں میں آپ کیسی زندگی بنانا چاہتے ہیں، اس بارے میں بتائیں۔"></textarea>
         </div>
 
         <div class="field">
-          <label>How do you usually spend your free time?</label>
+          <label><span data-en="How do you usually spend your free time?" data-ur="آپ عام طور پر اپنا فارغ وقت کیسے گزارتے ہیں؟">How do you usually spend your free time?</span><span class="req">*</span></label>
           <div class="checkbox-group">
-            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Spending time with family"> Family</label>
-            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Meeting friends"> Meeting friends</label>
-            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Reading"> Reading</label>
-            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Watching movies/TV"> Movies/TV</label>
-            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Social media"> Social media</label>
-            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Gaming"> Gaming</label>
-            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Sports/fitness"> Sports/fitness</label>
-            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Community/volunteer work"> Volunteer work</label>
-            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Hobbies/creative activities"> Hobbies/creative</label>
-            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Mostly relaxing at home"> Relaxing at home</label>
-            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Islamic learning"> Islamic learning</label>
-            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Other"> Other</label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Spending time with family"> <span data-en="Family" data-ur="خاندان کے ساتھ وقت">Family</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Meeting friends"> <span data-en="Meeting friends" data-ur="دوستوں سے ملنا">Meeting friends</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Reading"> <span data-en="Reading" data-ur="مطالعہ">Reading</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Watching movies/TV"> <span data-en="Movies/TV" data-ur="فلمیں/ٹی وی">Movies/TV</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Social media"> <span data-en="Social media" data-ur="سوشل میڈیا">Social media</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Gaming"> <span data-en="Gaming" data-ur="گیمنگ">Gaming</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Sports/fitness"> <span data-en="Sports/fitness" data-ur="کھیل/فٹنس">Sports/fitness</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Community/volunteer work"> <span data-en="Volunteer work" data-ur="رضاکارانہ کام">Volunteer work</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Hobbies/creative activities"> <span data-en="Hobbies/creative" data-ur="مشاغل/تخلیقی سرگرمیاں">Hobbies/creative</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Mostly relaxing at home"> <span data-en="Relaxing at home" data-ur="گھر پر آرام">Relaxing at home</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Islamic learning"> <span data-en="Islamic learning" data-ur="دینی تعلیم">Islamic learning</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="freeTime" value="Other" id="freeTimeOtherBox"> <span data-en="Other" data-ur="دیگر">Other</span></label>
           </div>
-          <div class="help">You can select more than one option.</div>
+          <div class="conditional" id="freeTimeOtherField" style="margin-top:12px;">
+            <input type="text" id="freeTimeOtherText" name="freeTimeOther" placeholder="Please specify" data-ph-en="Please specify" data-ph-ur="براہ کرم وضاحت کریں">
+          </div>
+          <div class="error-msg" data-en="Please select at least one option." data-ur="براہ کرم کم از کم ایک آپشن منتخب کریں۔">Please select at least one option.</div>
+          <div class="help" data-en="You can select more than one option." data-ur="آپ ایک سے زیادہ آپشن منتخب کر سکتے ہیں۔">You can select more than one option.</div>
         </div>
       </div>
 
       <!-- ===================== STEP 5 ===================== -->
       <div class="step" data-step="5">
-        <div class="step-desc">Every person has their own preferences when choosing a life partner. Share what matters most to you, including religious values, character, family background, lifestyle, and other expectations. This will help us look beyond basic biodata and identify a more meaningful and compatible match.</div>
+        <div class="step-desc" data-en="Every person has their own preferences when choosing a life partner. Share what matters most to you, including religious values, character, family background, lifestyle, and other expectations. This will help us look beyond basic biodata and identify a more meaningful and compatible match." data-ur="ہر شخص کی زندگی کا ساتھی چننے میں اپنی ترجیحات ہوتی ہیں۔ اپنے لیے سب سے اہم باتیں شیئر کریں، جن میں دینی اقدار، کردار، خاندانی پس منظر، طرزِ زندگی اور دیگر توقعات شامل ہیں۔ اس سے ہمیں محض بائیو ڈیٹا سے آگے بڑھ کر زیادہ بامعنی اور موزوں رشتہ تلاش کرنے میں مدد ملے گی۔">Every person has their own preferences when choosing a life partner. Share what matters most to you, including religious values, character, family background, lifestyle, and other expectations. This will help us look beyond basic biodata and identify a more meaningful and compatible match.</div>
 
         <div class="field">
-          <label>What age range would you prefer for your potential spouse?</label>
-          <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="prefAge" value="18-22"> 18–22</label>
-            <label class="radio-option"><input type="radio" name="prefAge" value="23-27"> 23–27</label>
-            <label class="radio-option"><input type="radio" name="prefAge" value="28-32"> 28–32</label>
-            <label class="radio-option"><input type="radio" name="prefAge" value="33-37"> 33–37</label>
-            <label class="radio-option"><input type="radio" name="prefAge" value="38-40"> 38–40</label>
-            <label class="radio-option"><input type="radio" name="prefAge" value="40+"> 40+</label>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>What height range would you prefer for your potential spouse?</label>
-          <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="prefHeight" value="No specific preference"> No preference</label>
-            <label class="radio-option"><input type="radio" name="prefHeight" value="Below 5'0&quot;"> Below 5'0"</label>
-            <label class="radio-option"><input type="radio" name="prefHeight" value="5'0&quot; – 5'3&quot;"> 5'0"–5'3"</label>
-            <label class="radio-option"><input type="radio" name="prefHeight" value="5'4&quot; – 5'7&quot;"> 5'4"–5'7"</label>
-            <label class="radio-option"><input type="radio" name="prefHeight" value="5'8&quot; – 5'11&quot;"> 5'8"–5'11"</label>
-            <label class="radio-option"><input type="radio" name="prefHeight" value="Above 6'0&quot;"> Above 6'0"</label>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>What type of occupation would you prefer in your spouse?</label>
+          <label><span data-en="What age range would you prefer for your potential spouse?" data-ur="آپ اپنے ہونے والے ساتھی کے لیے کس عمر کی حد کو ترجیح دیں گے؟">What age range would you prefer for your potential spouse?</span></label>
           <div class="checkbox-group">
-            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="No specific preference"> No preference</label>
-            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Government employee"> Government employee</label>
-            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Private-sector employee"> Private-sector employee</label>
-            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Business / Entrepreneur"> Business/Entrepreneur</label>
-            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Teacher / Academic"> Teacher/Academic</label>
-            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Healthcare professional"> Healthcare professional</label>
-            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Other"> Other</label>
+            <label class="checkbox-option"><input type="checkbox" name="prefAge" value="18-22"> 18–22</label>
+            <label class="checkbox-option"><input type="checkbox" name="prefAge" value="23-27"> 23–27</label>
+            <label class="checkbox-option"><input type="checkbox" name="prefAge" value="28-32"> 28–32</label>
+            <label class="checkbox-option"><input type="checkbox" name="prefAge" value="33-37"> 33–37</label>
+            <label class="checkbox-option"><input type="checkbox" name="prefAge" value="38-40"> 38–40</label>
+            <label class="checkbox-option"><input type="checkbox" name="prefAge" value="40+"> 40+</label>
           </div>
-          <div class="help">You can select more than one option.</div>
+          <div class="help" data-en="You can select more than one option." data-ur="آپ ایک سے زیادہ آپشن منتخب کر سکتے ہیں۔">You can select more than one option.</div>
         </div>
 
         <div class="field">
-          <label>What are your expectations regarding living arrangements after marriage?<span class="req">*</span></label>
-          <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="livingArrangement" value="I strongly prefer an independent home" required> Independent home</label>
-            <label class="radio-option"><input type="radio" name="livingArrangement" value="I prefer living with parents/in-laws"> With parents/in-laws</label>
-            <label class="radio-option"><input type="radio" name="livingArrangement" value="I am comfortable with either"> Comfortable with either</label>
-            <label class="radio-option"><input type="radio" name="livingArrangement" value="I would like to discuss this with my potential spouse"> Discuss with spouse</label>
+          <label><span data-en="What height range would you prefer for your potential spouse?" data-ur="آپ اپنے ہونے والے ساتھی کے لیے کس قد کی حد کو ترجیح دیں گے؟">What height range would you prefer for your potential spouse?</span></label>
+          <div class="checkbox-group">
+            <label class="checkbox-option"><input type="checkbox" name="prefHeight" value="No specific preference"> <span data-en="No preference" data-ur="کوئی ترجیح نہیں">No preference</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="prefHeight" value="Below 5'0&quot;"> <span data-en="Below 5'0&quot;" data-ur="5'0" سے کم">Below 5'0"</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="prefHeight" value="5'0&quot; – 5'3&quot;"> <span data-en="5'0&quot; – 5'3&quot;" data-ur="5'0" – 5'3"">5'0" – 5'3"</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="prefHeight" value="5'4&quot; – 5'7&quot;"> <span data-en="5'4&quot; – 5'7&quot;" data-ur="5'4" – 5'7"">5'4" – 5'7"</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="prefHeight" value="5'8&quot; – 5'11&quot;"> <span data-en="5'8&quot; – 5'11&quot;" data-ur="5'8" – 5'11"">5'8" – 5'11"</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="prefHeight" value="Above 6'0&quot;"> <span data-en="Above 6'0&quot;" data-ur="6'0" سے زیادہ">Above 6'0"</span></label>
           </div>
-          <div class="error-msg">Please select an option.</div>
+          <div class="help" data-en="You can select more than one option." data-ur="آپ ایک سے زیادہ آپشن منتخب کر سکتے ہیں۔">You can select more than one option.</div>
         </div>
 
         <div class="field">
-          <label>How important is regular Salah (five daily prayers) in your spouse?<span class="req">*</span></label>
-          <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="salahImportance" value="Very important" required> Very important</label>
-            <label class="radio-option"><input type="radio" name="salahImportance" value="Preferred, but flexible"> Preferred, but flexible</label>
-            <label class="radio-option"><input type="radio" name="salahImportance" value="Not important"> Not important</label>
+          <label><span data-en="What type of occupation would you prefer in your spouse?" data-ur="آپ اپنے ساتھی میں کس قسم کے پیشے کو ترجیح دیں گے؟">What type of occupation would you prefer in your spouse?</span></label>
+          <div class="checkbox-group">
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="No specific preference"> <span data-en="No preference" data-ur="کوئی ترجیح نہیں">No preference</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Government employee"> <span data-en="Government employee" data-ur="سرکاری ملازم">Government employee</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Private-sector employee"> <span data-en="Private-sector employee" data-ur="نجی شعبے کا ملازم">Private-sector employee</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Business / Entrepreneur"> <span data-en="Business/Entrepreneur" data-ur="کاروبار/انٹرپرینیور">Business/Entrepreneur</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Teacher / Academic"> <span data-en="Teacher/Academic" data-ur="استاد/تعلیمی شعبہ">Teacher/Academic</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Healthcare professional"> <span data-en="Healthcare professional" data-ur="طبی شعبے کا ماہر">Healthcare professional</span></label>
+            <label class="checkbox-option"><input type="checkbox" name="prefOccupation" value="Other" id="prefOccupationOtherBox"> <span data-en="Other" data-ur="دیگر">Other</span></label>
           </div>
-          <div class="error-msg">Please select an option.</div>
+          <div class="conditional" id="prefOccupationOtherField" style="margin-top:12px;">
+            <input type="text" id="prefOccupationOtherText" name="prefOccupationOther" placeholder="Please specify" data-ph-en="Please specify" data-ph-ur="براہ کرم وضاحت کریں">
+          </div>
+          <div class="help" data-en="You can select more than one option." data-ur="آپ ایک سے زیادہ آپشن منتخب کر سکتے ہیں۔">You can select more than one option.</div>
+        </div>
+
+        <div class="field">
+          <label><span data-en="What are your expectations regarding living arrangements after marriage?" data-ur="شادی کے بعد رہائشی انتظامات کے بارے میں آپ کی کیا توقعات ہیں؟">What are your expectations regarding living arrangements after marriage?</span><span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="livingArrangement" value="I strongly prefer an independent home" required> <span data-en="Independent home" data-ur="علیحدہ گھر">Independent home</span></label>
+            <label class="radio-option"><input type="radio" name="livingArrangement" value="I prefer living with parents/in-laws"> <span data-en="With parents/in-laws" data-ur="والدین/سسرال کے ساتھ">With parents/in-laws</span></label>
+            <label class="radio-option"><input type="radio" name="livingArrangement" value="I am comfortable with either"> <span data-en="Comfortable with either" data-ur="دونوں صورتوں میں راضی">Comfortable with either</span></label>
+            <label class="radio-option"><input type="radio" name="livingArrangement" value="I would like to discuss this with my potential spouse"> <span data-en="Discuss with spouse" data-ur="ساتھی سے بات چیت کریں گے">Discuss with spouse</span></label>
+          </div>
+          <div class="error-msg" data-en="Please select an option." data-ur="براہ کرم ایک آپشن منتخب کریں۔">Please select an option.</div>
+        </div>
+
+        <div class="field">
+          <label><span data-en="How important is regular Salah (five daily prayers) in your spouse?" data-ur="آپ کے ساتھی میں پابندی سے نماز (پانچ وقت) کی کتنی اہمیت ہے؟">How important is regular Salah (five daily prayers) in your spouse?</span><span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="salahImportance" value="Very important" required> <span data-en="Very important" data-ur="بہت اہم">Very important</span></label>
+            <label class="radio-option"><input type="radio" name="salahImportance" value="Preferred, but flexible"> <span data-en="Preferred, but flexible" data-ur="ترجیح ہے، لیکن لچکدار">Preferred, but flexible</span></label>
+            <label class="radio-option"><input type="radio" name="salahImportance" value="Not important"> <span data-en="Not important" data-ur="اہم نہیں">Not important</span></label>
+          </div>
+          <div class="error-msg" data-en="Please select an option." data-ur="براہ کرم ایک آپشن منتخب کریں۔">Please select an option.</div>
         </div>
 
         <div class="field conditional" id="hijabImportanceField">
-          <label>How important is it to you that your spouse observes hijab?<span class="req">*</span></label>
+          <label><span data-en="How important is it to you that your spouse observes hijab?" data-ur="آپ کے لیے یہ کتنا اہم ہے کہ آپ کی ساتھی حجاب کرے؟">How important is it to you that your spouse observes hijab?</span><span class="req">*</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="hijabImportance" value="Very important"> Very important</label>
-            <label class="radio-option"><input type="radio" name="hijabImportance" value="Preferred, but flexible"> Preferred, but flexible</label>
-            <label class="radio-option"><input type="radio" name="hijabImportance" value="Not important"> Not important</label>
+            <label class="radio-option"><input type="radio" name="hijabImportance" value="Very important"> <span data-en="Very important" data-ur="بہت اہم">Very important</span></label>
+            <label class="radio-option"><input type="radio" name="hijabImportance" value="Preferred, but flexible"> <span data-en="Preferred, but flexible" data-ur="ترجیح ہے، لیکن لچکدار">Preferred, but flexible</span></label>
+            <label class="radio-option"><input type="radio" name="hijabImportance" value="Not important"> <span data-en="Not important" data-ur="اہم نہیں">Not important</span></label>
           </div>
-          <div class="error-msg">Please select an option.</div>
+          <div class="error-msg" data-en="Please select an option." data-ur="براہ کرم ایک آپشن منتخب کریں۔">Please select an option.</div>
         </div>
 
         <div class="field conditional" id="beardImportanceField">
-          <label>How important is it to you that your spouse keeps a beard in accordance with the Sunnah?<span class="req">*</span></label>
+          <label><span data-en="How important is it to you that your spouse keeps a beard in accordance with the Sunnah?" data-ur="آپ کے لیے یہ کتنا اہم ہے کہ آپ کا ساتھی سنت کے مطابق داڑھی رکھے؟">How important is it to you that your spouse keeps a beard in accordance with the Sunnah?</span><span class="req">*</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="beardImportance" value="Very important"> Very important</label>
-            <label class="radio-option"><input type="radio" name="beardImportance" value="Preferred, but flexible"> Preferred, but flexible</label>
-            <label class="radio-option"><input type="radio" name="beardImportance" value="Not important"> Not important</label>
+            <label class="radio-option"><input type="radio" name="beardImportance" value="Very important"> <span data-en="Very important" data-ur="بہت اہم">Very important</span></label>
+            <label class="radio-option"><input type="radio" name="beardImportance" value="Preferred, but flexible"> <span data-en="Preferred, but flexible" data-ur="ترجیح ہے، لیکن لچکدار">Preferred, but flexible</span></label>
+            <label class="radio-option"><input type="radio" name="beardImportance" value="Not important"> <span data-en="Not important" data-ur="اہم نہیں">Not important</span></label>
           </div>
-          <div class="error-msg">Please select an option.</div>
+          <div class="error-msg" data-en="Please select an option." data-ur="براہ کرم ایک آپشن منتخب کریں۔">Please select an option.</div>
         </div>
 
         <div class="field">
-          <label>What is your view on dowry / demands from the bride's family?</label>
+          <label><span data-en="What is your view on dowry / demands from the bride's family?" data-ur="جہیز / دلہن کے خاندان سے مطالبات کے بارے میں آپ کی کیا رائے ہے؟">What is your view on dowry / demands from the bride's family?</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="dowryView" value="Completely against it"> Completely against it</label>
-            <label class="radio-option"><input type="radio" name="dowryView" value="I believe there should be no demands, but gifts from the family are acceptable if voluntary"> No demands, voluntary gifts okay</label>
-            <label class="radio-option"><input type="radio" name="dowryView" value="I'm open to discussing expectations between families"> Open to discussing</label>
+            <label class="radio-option"><input type="radio" name="dowryView" value="Completely against it"> <span data-en="Completely against it" data-ur="مکمل طور پر خلاف">Completely against it</span></label>
+            <label class="radio-option"><input type="radio" name="dowryView" value="I believe there should be no demands, but gifts from the family are acceptable if voluntary"> <span data-en="No demands, voluntary gifts okay" data-ur="کوئی مطالبہ نہیں، رضاکارانہ تحائف قابلِ قبول">No demands, voluntary gifts okay</span></label>
+            <label class="radio-option"><input type="radio" name="dowryView" value="I'm open to discussing expectations between families"> <span data-en="Open to discussing" data-ur="بات چیت کے لیے تیار">Open to discussing</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label for="spouseExpectations">What are your expectations from your future spouse?</label>
-          <textarea id="spouseExpectations" name="spouseExpectations" rows="3"></textarea>
-          <div class="help">Please share what you value and expect from your spouse in marriage.</div>
+          <label for="spouseExpectations"><span data-en="What are your expectations from your future spouse?" data-ur="آپ کے مستقبل کے ساتھی سے آپ کی کیا توقعات ہیں؟">What are your expectations from your future spouse?</span><span class="req">*</span></label>
+          <textarea id="spouseExpectations" name="spouseExpectations" rows="3" placeholder="Please share what you value and expect from your spouse in marriage." data-ph-en="Please share what you value and expect from your spouse in marriage." data-ph-ur="براہ کرم بتائیں کہ آپ اپنے ساتھی سے شادی میں کیا اہمیت اور توقع رکھتے ہیں۔" required></textarea>
+          <div class="error-msg" data-en="Please share your expectations from your future spouse." data-ur="براہ کرم اپنے مستقبل کے ساتھی سے اپنی توقعات شیئر کریں۔">Please share your expectations from your future spouse.</div>
         </div>
 
         <div class="field">
-          <label for="otherPreferences">Are there any other important preferences you would like us to consider?</label>
-          <textarea id="otherPreferences" name="otherPreferences" rows="3"></textarea>
-          <div class="help">Family values, lifestyle, career expectations, location, religious preferences, or other compatibility factors.</div>
+          <label for="otherPreferences"><span data-en="Are there any other important preferences you would like us to consider?" data-ur="کیا کوئی اور اہم ترجیحات ہیں جن پر ہم غور کریں؟">Are there any other important preferences you would like us to consider?</span></label>
+          <textarea id="otherPreferences" name="otherPreferences" rows="3" placeholder="Family values, lifestyle, career expectations, location, religious preferences, or other compatibility factors." data-ph-en="Family values, lifestyle, career expectations, location, religious preferences, or other compatibility factors." data-ph-ur="خاندانی اقدار، طرزِ زندگی، کیریئر کی توقعات، مقام، مذہبی ترجیحات، یا مطابقت کے دیگر عوامل۔"></textarea>
         </div>
       </div>
 
       <!-- ===================== STEP 6 ===================== -->
       <div class="step" data-step="6">
-        <div class="step-desc">Family involvement is one of Qalbayn's core values. Please provide your Wali/Guardian's details so they can be involved at the appropriate stage, with your consent.</div>
+        <div class="step-desc" data-en="Family involvement is one of Qalbayn's core values. Please provide your Wali/Guardian's details so they can be involved at the appropriate stage, with your consent." data-ur="خاندان کی شمولیت قلبین کی بنیادی اقدار میں سے ایک ہے۔ براہ کرم اپنے ولی/سرپرست کی تفصیلات فراہم کریں تاکہ آپ کی رضامندی سے مناسب مرحلے پر انہیں شامل کیا جا سکے۔">Family involvement is one of Qalbayn's core values. Please provide your Wali/Guardian's details so they can be involved at the appropriate stage, with your consent.</div>
 
         <div class="field">
-          <label for="waliName">Wali / Guardian's Full Name<span class="req">*</span></label>
+          <label for="waliName"><span data-en="Wali / Guardian's Full Name" data-ur="ولی / سرپرست کا مکمل نام">Wali / Guardian's Full Name</span><span class="req">*</span></label>
           <input type="text" id="waliName" name="waliName" required>
-          <div class="error-msg">Please enter this field.</div>
+          <div class="error-msg" data-en="Please enter this field." data-ur="براہ کرم یہ خانہ پُر کریں۔">Please enter this field.</div>
         </div>
 
         <div class="field">
-          <label>Relationship to the Wali / Guardian</label>
+          <label><span data-en="Relationship to the Wali / Guardian" data-ur="ولی / سرپرست سے رشتہ">Relationship to the Wali / Guardian</span><span class="req">*</span></label>
           <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="waliRelationship" value="Father"> Father</label>
-            <label class="radio-option"><input type="radio" name="waliRelationship" value="Mother"> Mother</label>
-            <label class="radio-option"><input type="radio" name="waliRelationship" value="Brother"> Brother</label>
-            <label class="radio-option"><input type="radio" name="waliRelationship" value="Sister"> Sister</label>
-            <label class="radio-option"><input type="radio" name="waliRelationship" value="Other family member"> Other family member</label>
-            <label class="radio-option"><input type="radio" name="waliRelationship" value="Friend"> Friend</label>
+            <label class="radio-option"><input type="radio" name="waliRelationship" value="Father" required> <span data-en="Father" data-ur="والد">Father</span></label>
+            <label class="radio-option"><input type="radio" name="waliRelationship" value="Mother"> <span data-en="Mother" data-ur="والدہ">Mother</span></label>
+            <label class="radio-option"><input type="radio" name="waliRelationship" value="Brother"> <span data-en="Brother" data-ur="بھائی">Brother</span></label>
+            <label class="radio-option"><input type="radio" name="waliRelationship" value="Sister"> <span data-en="Sister" data-ur="بہن">Sister</span></label>
+            <label class="radio-option"><input type="radio" name="waliRelationship" value="Other family member"> <span data-en="Other family member" data-ur="خاندان کا کوئی اور فرد">Other family member</span></label>
+            <label class="radio-option"><input type="radio" name="waliRelationship" value="Friend"> <span data-en="Friend" data-ur="دوست">Friend</span></label>
           </div>
+          <div class="error-msg" data-en="Please select your relationship to the Wali/Guardian." data-ur="براہ کرم ولی/سرپرست سے اپنا رشتہ منتخب کریں۔">Please select your relationship to the Wali/Guardian.</div>
         </div>
 
         <div class="field">
-          <label for="waliContact">Wali / Guardian's WhatsApp Number<span class="req">*</span></label>
-          <input type="tel" id="waliContact" name="waliContact" inputmode="numeric" maxlength="10" placeholder="10-digit number" required>
-          <div class="error-msg">Please enter a valid 10-digit WhatsApp number.</div>
+          <label for="waliContact"><span data-en="Wali / Guardian's WhatsApp Number" data-ur="ولی / سرپرست کا واٹس ایپ نمبر">Wali / Guardian's WhatsApp Number</span><span class="req">*</span></label>
+          <input type="tel" id="waliContact" name="waliContact" inputmode="numeric" maxlength="10" placeholder="10-digit number" data-ph-en="10-digit number" data-ph-ur="10 ہندسوں کا نمبر" required>
+          <div class="error-msg" data-en="Please enter a valid 10-digit WhatsApp number." data-ur="براہ کرم درست 10 ہندسوں کا واٹس ایپ نمبر درج کریں۔">Please enter a valid 10-digit WhatsApp number.</div>
         </div>
 
         <div class="field">
-          <label>Consent &amp; Permission<span class="req">*</span></label>
+          <label><span data-en="Consent &amp; Permission" data-ur="رضامندی اور اجازت">Consent &amp; Permission</span><span class="req">*</span></label>
           <div class="consent-item">
             <input type="checkbox" name="consent1" id="consent1" required>
-            <label for="consent1" style="margin:0; font-weight:400;">I confirm that the information I have provided in this form is true and accurate to the best of my knowledge.</label>
+            <label for="consent1" style="margin:0; font-weight:400;"><span data-en="I confirm that the information I have provided in this form is true and accurate to the best of my knowledge." data-ur="میں تصدیق کرتا/کرتی ہوں کہ اس فارم میں فراہم کردہ معلومات میری بہترین معلومات کے مطابق درست اور صحیح ہیں۔">I confirm that the information I have provided in this form is true and accurate to the best of my knowledge.</span></label>
           </div>
           <div class="consent-item">
             <input type="checkbox" name="consent2" id="consent2" required>
-            <label for="consent2" style="margin:0; font-weight:400;">I give Qalbayn permission to use my profile information for the purpose of identifying and facilitating suitable matrimonial matches.</label>
+            <label for="consent2" style="margin:0; font-weight:400;"><span data-en="I give Qalbayn permission to use my profile information for the purpose of identifying and facilitating suitable matrimonial matches." data-ur="میں قلبین کو موزوں رشتے تلاش کرنے اور آسان بنانے کے مقصد کے لیے اپنی پروفائل معلومات استعمال کرنے کی اجازت دیتا/دیتی ہوں۔">I give Qalbayn permission to use my profile information for the purpose of identifying and facilitating suitable matrimonial matches.</span></label>
           </div>
           <div class="consent-item">
             <input type="checkbox" name="consent3" id="consent3" required>
-            <label for="consent3" style="margin:0; font-weight:400;">I understand that my personal contact details, including my WhatsApp number, will not be shared with a potential match without my consent and/or the appropriate mutual agreement.</label>
+            <label for="consent3" style="margin:0; font-weight:400;"><span data-en="I understand that my personal contact details, including my WhatsApp number, will not be shared with a potential match without my consent." data-ur="میں سمجھتا/سمجھتی ہوں کہ میری ذاتی رابطہ تفصیلات، بشمول واٹس ایپ نمبر، میری رضامندی کے بغیر کسی ممکنہ رشتے کے ساتھ شیئر نہیں کی جائیں گی۔">I understand that my personal contact details, including my WhatsApp number, will not be shared with a potential match without my consent.</span></label>
           </div>
-          <div class="error-msg" id="err-consent">Please accept all three consent statements to continue.</div>
+          <div class="error-msg" id="err-consent" data-en="Please accept all three consent statements to continue." data-ur="جاری رکھنے کے لیے براہ کرم تینوں رضامندی بیانات قبول کریں۔">Please accept all three consent statements to continue.</div>
         </div>
       </div>
 
       <div class="nav-row">
-        <button type="button" class="btn btn-back" id="backBtn" style="display:none;">Back</button>
-        <button type="button" class="btn btn-next" id="nextBtn">Next</button>
+        <button type="button" class="btn btn-back" id="backBtn" style="display:none;" data-en="Back" data-ur="پیچھے">Back</button>
+        <button type="button" class="btn btn-next" id="nextBtn" data-en="Next" data-ur="اگلا">Next</button>
       </div>
     </form>
   </div>
 
   <div class="status-box" id="statusSubmitting">
     <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#0E4A3B" stroke-width="2" stroke-dasharray="42" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.9s" repeatCount="indefinite"/></circle></svg>
-    <h2>Saving your details…</h2>
-    <p>Please don't close this page.</p>
+    <h2 data-en="Saving your details…" data-ur="آپ کی تفصیلات محفوظ کی جا رہی ہیں…">Saving your details…</h2>
+    <p data-en="Please don't close this page." data-ur="براہ کرم یہ صفحہ بند نہ کریں۔">Please don't close this page.</p>
   </div>
 
   <div class="status-box" id="statusDone">
     <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#0E4A3B" stroke-width="1.6"/><path d="M8 12 L11 15 L16 9" stroke="#B08A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <h2>Thank you for registering!</h2>
-    <p>Your details have been saved. Our team will personally review your responses and reach out to you on WhatsApp shortly.</p>
+    <h2 data-en="Jazak Allahu Khairan!" data-ur="جزاک اللہ خیراً!">Jazak Allahu Khairan!</h2>
+    <p data-en="Your details have been saved, Alhamdulillah! Our team will personally review your responses and reach out to you on WhatsApp shortly." data-ur="آپ کی تفصیلات محفوظ کر لی گئی ہیں، الحمدللہ! ہماری ٹیم ذاتی طور پر آپ کے جوابات کا جائزہ لے کر جلد ہی واٹس ایپ پر آپ سے رابطہ کرے گی۔">Your details have been saved, Alhamdulillah! Our team will personally review your responses and reach out to you on WhatsApp shortly.</p>
+    <p style="margin-top:18px; padding-top:18px; border-top:1px solid rgba(14,74,59,0.14);" data-en="If you know someone who is looking for a spouse through a halal, family-oriented process, we would be grateful if you could share Qalbayn with them." data-ur="اگر آپ کسی ایسے شخص کو جانتے ہیں جو حلال اور خاندانی طریقے سے نکاح کے لیے رشتہ تلاش کر رہا ہے، تو براہِ کرم قلبین کے بارے میں انہیں ضرور بتائیں۔">If you know someone who is looking for a spouse through a halal, family-oriented process, we would be grateful if you could share Qalbayn with them.</p>
+    <div class="cta-social-row">
+      <a href="#" id="shareWhatsapp" class="btn-social btn-whatsapp" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.1c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.82 2 .89 2.15.07.14.12.31.02.5-.1.19-.15.3-.29.47-.14.16-.3.36-.43.48-.14.13-.29.28-.13.55.17.28.75 1.24 1.62 2.01 1.11 1 2.05 1.31 2.32 1.46.27.14.43.12.59-.07.16-.19.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.63-.18 1.31z"/></svg>
+        <span data-en="Share on WhatsApp" data-ur="واٹس ایپ پر شیئر کریں">Share on WhatsApp</span>
+      </a>
+      <a href="https://www.instagram.com/qalbayn.nikah/" class="btn-social btn-instagram" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="#fff" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="#fff"/></svg>
+        <span data-en="Follow us on Instagram" data-ur="انسٹاگرام پر ہمیں فالو کریں">Follow us on Instagram</span>
+      </a>
+    </div>
   </div>
 
   <div class="status-box" id="statusError">
     <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#B3432B" stroke-width="1.6"/><path d="M8 8 L16 16 M16 8 L8 16" stroke="#B3432B" stroke-width="1.6"/></svg>
-    <h2>Something went wrong</h2>
-    <p>We couldn't save your details. Please check your connection and try again.</p>
-    <button class="btn btn-next" style="margin-top:22px;" onclick="location.reload()">Try again</button>
+    <h2 data-en="Something went wrong" data-ur="کچھ غلط ہو گیا">Something went wrong</h2>
+    <p data-en="We couldn't save your details. Please check your connection and try again." data-ur="ہم آپ کی تفصیلات محفوظ نہیں کر سکے۔ براہ کرم اپنا کنکشن چیک کریں اور دوبارہ کوشش کریں۔">We couldn't save your details. Please check your connection and try again.</p>
+    <button class="btn btn-next" style="margin-top:22px;" onclick="location.reload()" data-en="Try again" data-ur="دوبارہ کوشش کریں">Try again</button>
   </div>
 </div>
 
@@ -652,14 +735,25 @@
   const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbxDQ_rY8svwXMVk0XDHJNL0gC7XpxNEFXqgFG6z3-NtcDbpw3xAa4Z55x8Wgcc6vVrRZQ/exec";
 
   const TOTAL_STEPS = 6;
-  const STEP_TITLES = [
-    "Personal Details & Family Background",
-    "Education & Profession",
-    "Religious Background",
-    "Lifestyle & Personality",
-    "Partner Preferences",
-    "Wali / Guardian Details & Consent"
-  ];
+  const STEP_TITLES = {
+    en: [
+      "Personal Details & Family Background",
+      "Education & Profession",
+      "Religious Background",
+      "Lifestyle & Personality",
+      "Partner Preferences",
+      "Wali / Guardian Details & Consent"
+    ],
+    ur: [
+      "ذاتی تفصیلات اور خاندانی پس منظر",
+      "تعلیم اور پیشہ",
+      "دینی پس منظر",
+      "طرزِ زندگی اور شخصیت",
+      "ساتھی کی ترجیحات",
+      "ولی/سرپرست کی تفصیلات اور رضامندی"
+    ]
+  };
+  let currentLang = 'en';
 
   let currentStep = 1;
   // A unique ID for this submission so every "Next" click updates the same sheet row.
@@ -677,23 +771,93 @@
   const progressFill = document.getElementById('progressFill');
 
   function updateProgress(){
-    progressText.textContent = 'Section ' + currentStep + ' of ' + TOTAL_STEPS;
-    progressTitle.textContent = STEP_TITLES[currentStep - 1];
+    progressText.textContent = currentLang === 'ur'
+      ? ('سیکشن ' + currentStep + ' از ' + TOTAL_STEPS)
+      : ('Section ' + currentStep + ' of ' + TOTAL_STEPS);
+    progressTitle.textContent = STEP_TITLES[currentLang][currentStep - 1];
     progressFill.style.width = ((currentStep / TOTAL_STEPS) * 100) + '%';
+  }
+
+  function nextBtnLabel(){
+    if(currentStep === TOTAL_STEPS) return currentLang === 'ur' ? 'جمع کروائیں' : 'Submit';
+    return currentLang === 'ur' ? 'اگلا' : 'Next';
   }
 
   function showStep(n){
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
     document.querySelector('.step[data-step="' + n + '"]').classList.add('active');
     backBtn.style.display = n === 1 ? 'none' : 'block';
-    nextBtn.textContent = n === TOTAL_STEPS ? 'Submit' : 'Next';
+    nextBtn.textContent = nextBtnLabel();
     updateProgress();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Bilingual (English / Urdu) support.
+  function setLang(lang){
+    currentLang = lang;
+    document.body.classList.toggle('lang-ur', lang === 'ur');
+    document.documentElement.setAttribute('lang', lang);
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      var text = lang === 'ur' ? el.getAttribute('data-ur') : el.getAttribute('data-en');
+      if(text !== null){ el.innerHTML = text; }
+    });
+    document.querySelectorAll('[data-ph-en]').forEach(function(el){
+      var ph = lang === 'ur' ? el.getAttribute('data-ph-ur') : el.getAttribute('data-ph-en');
+      if(ph !== null){ el.setAttribute('placeholder', ph); }
+    });
+    var backLink = document.getElementById('backLink');
+    if(backLink){ backLink.setAttribute('href', lang === 'ur' ? 'index.html?lang=ur' : 'index.html'); }
+    nextBtn.textContent = nextBtnLabel();
+    updateProgress();
+    updateShareLink();
+    if(typeof updateAgeDisplay === 'function') updateAgeDisplay();
   }
 
   function clearErrorsInStep(stepEl){
     stepEl.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
     stepEl.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
+  }
+
+  // Restrict Date of Birth to 18+ years old as on today.
+  const dobInput = document.getElementById('dob');
+  function eighteenYearsAgo(){
+    const d = new Date();
+    d.setFullYear(d.getFullYear() - 18);
+    return d;
+  }
+  function isAtLeast18(dateStr){
+    if(!dateStr) return false;
+    const dob = new Date(dateStr + 'T00:00:00');
+    if(isNaN(dob.getTime())) return false;
+    return dob <= eighteenYearsAgo();
+  }
+  if(dobInput){
+    const maxDob = eighteenYearsAgo();
+    dobInput.max = maxDob.toISOString().slice(0,10);
+  }
+  const ageDisplay = document.getElementById('ageDisplay');
+  function computeAge(dateStr){
+    const dob = new Date(dateStr + 'T00:00:00');
+    if(isNaN(dob.getTime())) return null;
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if(m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+    return age;
+  }
+  function updateAgeDisplay(){
+    if(!ageDisplay) return;
+    const val = dobInput.value.trim();
+    if(!val){ ageDisplay.textContent = ''; return; }
+    const age = computeAge(val);
+    if(age === null){ ageDisplay.textContent = ''; return; }
+    ageDisplay.textContent = currentLang === 'ur'
+      ? ('آپ کی عمر: ' + age + ' سال')
+      : ('Your age: ' + age + ' years');
+  }
+  if(dobInput){
+    dobInput.addEventListener('change', updateAgeDisplay);
+    dobInput.addEventListener('input', updateAgeDisplay);
   }
 
   // Toggle gender-conditional fields.
@@ -706,6 +870,83 @@
     document.getElementById('hijabImportanceField').classList.toggle('show', g === 'Male');
     document.getElementById('beardImportanceField').classList.toggle('show', g === 'Female');
   }
+
+  // "No preference" checkboxes: selecting it clears and disables the other
+  // options in that same group; unchecking it re-enables them.
+  function setupNoPreferenceGroup(groupName, noPrefValue){
+    const boxes = Array.from(form.querySelectorAll('input[name="' + groupName + '"]'));
+    const noPrefBox = boxes.find(b => b.value === noPrefValue);
+    if(!noPrefBox) return;
+    function apply(){
+      const isChecked = noPrefBox.checked;
+      boxes.forEach(function(box){
+        if(box === noPrefBox) return;
+        const wasChecked = box.checked;
+        box.disabled = isChecked;
+        if(isChecked) box.checked = false;
+        if(isChecked && wasChecked) box.dispatchEvent(new Event('change'));
+      });
+    }
+    noPrefBox.addEventListener('change', apply);
+    apply();
+  }
+  setupNoPreferenceGroup('prefHeight', "No specific preference");
+  setupNoPreferenceGroup('prefOccupation', 'No specific preference');
+
+  // Show a free-text field when a specific "Other" checkbox is ticked.
+  function setupOtherTextReveal(boxId, fieldId){
+    const box = document.getElementById(boxId);
+    const field = document.getElementById(fieldId);
+    if(!box || !field) return;
+    function apply(){
+      field.classList.toggle('show', box.checked);
+    }
+    box.addEventListener('change', apply);
+    apply();
+  }
+  setupOtherTextReveal('freeTimeOtherBox', 'freeTimeOtherField');
+  setupOtherTextReveal('prefOccupationOtherBox', 'prefOccupationOtherField');
+
+  // Show "Course / Field of Study" whenever the selected qualification implies one.
+  (function setupFieldOfStudyReveal(){
+    const qualBoxes = Array.from(form.querySelectorAll('input[name="qualification"]'));
+    const field = document.getElementById('fieldOfStudyField');
+    const needsField = ['Diploma', "Bachelor's degree", "Master's degree", 'Doctorate', 'Other'];
+    function apply(){
+      const checked = qualBoxes.find(b => b.checked);
+      field.classList.toggle('show', !!checked && needsField.indexOf(checked.value) !== -1);
+    }
+    qualBoxes.forEach(b => b.addEventListener('change', apply));
+    apply();
+  })();
+
+  // Registering for daughter/sister implies the candidate is female —
+  // select Female and lock out Male until "Registering for" changes again.
+  const registeringForSelect = document.getElementById('registeringFor');
+  const maleRadio = form.querySelector('input[name="gender"][value="Male"]');
+  const femaleRadio = form.querySelector('input[name="gender"][value="Female"]');
+  function applyRegisteringForGenderLock(){
+    if(!registeringForSelect || !maleRadio || !femaleRadio) return;
+    const val = registeringForSelect.value;
+    const forcesFemale = (val === 'Daughter' || val === 'Sister');
+    const forcesMale = (val === 'Son' || val === 'Brother');
+    maleRadio.disabled = false;
+    femaleRadio.disabled = false;
+    if(forcesFemale){
+      femaleRadio.checked = true;
+      maleRadio.checked = false;
+      maleRadio.disabled = true;
+    } else if(forcesMale){
+      maleRadio.checked = true;
+      femaleRadio.checked = false;
+      femaleRadio.disabled = true;
+    }
+    applyConditionals();
+  }
+  if(registeringForSelect){
+    registeringForSelect.addEventListener('change', applyRegisteringForGenderLock);
+  }
+
   form.addEventListener('change', function(e){
     if(e.target.name === 'gender') applyConditionals();
   });
@@ -719,6 +960,28 @@
     function markInvalid(fieldEl){
       if(!firstInvalidEl) firstInvalidEl = fieldEl;
     }
+
+    stepEl.querySelectorAll('select[required]').forEach(function(select){
+      if(!select.value){
+        valid = false;
+        select.classList.add('invalid');
+        const fieldEl = select.closest('.field');
+        const err = fieldEl.querySelector('.error-msg');
+        if(err) err.classList.add('show');
+        markInvalid(fieldEl);
+      }
+    });
+
+    stepEl.querySelectorAll('textarea[required]').forEach(function(textarea){
+      if(!textarea.value.trim()){
+        valid = false;
+        textarea.classList.add('invalid');
+        const fieldEl = textarea.closest('.field');
+        const err = fieldEl.querySelector('.error-msg');
+        if(err) err.classList.add('show');
+        markInvalid(fieldEl);
+      }
+    });
 
     stepEl.querySelectorAll('input[required]').forEach(function(input){
       if(input.type === 'radio'){
@@ -757,6 +1020,29 @@
       }
     });
 
+    // Date of Birth must show the person is 18 years or older.
+    if(dobInput && stepEl.contains(dobInput) && dobInput.value.trim()){
+      if(!isAtLeast18(dobInput.value)){
+        valid = false;
+        dobInput.classList.add('invalid');
+        document.getElementById('err-dob-age').classList.add('show');
+        markInvalid(dobInput.closest('.field'));
+      }
+    }
+
+    // freeTime is a checkbox group — at least one must be selected.
+    const freeTimeBoxes = stepEl.querySelectorAll('input[name="freeTime"]');
+    if(freeTimeBoxes.length){
+      const anyChecked = Array.from(freeTimeBoxes).some(c => c.checked);
+      if(!anyChecked){
+        valid = false;
+        const fieldEl = freeTimeBoxes[0].closest('.field');
+        const err = fieldEl.querySelector('.error-msg');
+        if(err) err.classList.add('show');
+        markInvalid(fieldEl);
+      }
+    }
+
     // Consent checkboxes on the final step (shared single error message).
     if(n === TOTAL_STEPS){
       const consentBoxes = stepEl.querySelectorAll('input[name^="consent"]');
@@ -794,9 +1080,12 @@
     return data;
   }
 
-  async function saveProgress(){
+  async function saveProgress(isFinal){
     if(SHEET_ENDPOINT.indexOf('PASTE_YOUR') !== -1) return; // not configured yet
     const data = collectAllData();
+    if(isFinal){
+      data.finalSubmit = true; // tells the Apps Script backend to generate the Doc/PDF and save it to Drive
+    }
     try{
       await fetch(SHEET_ENDPOINT, {
         method: 'POST',
@@ -822,13 +1111,23 @@
     } else {
       formView.style.display = 'none';
       statusSubmitting.classList.add('show');
-      await saveProgress();
+      await saveProgress(true);
       setTimeout(function(){
         statusSubmitting.classList.remove('show');
         statusDone.classList.add('show');
       }, 600);
     }
   });
+
+  // Pre-fill the WhatsApp referral share message.
+  function updateShareLink(){
+    const shareLink = document.getElementById('shareWhatsapp');
+    if(!shareLink) return;
+    const registerUrl = window.location.origin + window.location.pathname;
+    const shareMsgEn = "As-salamu alaykum! If you're finding it hard to find a spouse for nikah (including for someone divorced or widowed), Qalbayn - a halal matchmaking platform for nikah is worth checking out. It's a halal process, privacy fully protected, no photos are shared on the platform. Registration is FREE " + registerUrl;
+    const shareMsgUr = "السلام علیکم! اگر آپ کو نکاح کے لیے ساتھی تلاش کرنے میں دشواری ہو رہی ہے (بشمول مطلقہ یا بیوہ افراد کے لیے)، تو قلبین — نکاح کے لیے ایک حلال میچ میکنگ پلیٹ فارم — دیکھنے کے قابل ہے۔ یہ ایک حلال طریقہ کار ہے، رازداری کا مکمل تحفظ ہے، اور پلیٹ فارم پر کوئی تصاویر شیئر نہیں کی جاتیں۔ رجسٹریشن بالکل مفت ہے " + registerUrl;
+    shareLink.href = "https://wa.me/?text=" + encodeURIComponent(currentLang === 'ur' ? shareMsgUr : shareMsgEn);
+  }
 
   backBtn.addEventListener('click', function(){
     if(currentStep > 1){
@@ -838,7 +1137,8 @@
   });
 
   applyConditionals();
-  updateProgress();
+  var urlLang = new URLSearchParams(window.location.search).get('lang');
+  setLang(urlLang === 'ur' ? 'ur' : 'en');
 </script>
 
 </body>
