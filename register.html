@@ -90,6 +90,8 @@
     color: var(--ink);
   }
   select{ cursor:pointer; }
+  .dob-row{ display:flex; gap:10px; }
+  .dob-row select{ flex:1; min-width:0; }
   select:invalid{ color: var(--ink-soft); }
   textarea{ resize: vertical; min-height: 80px; }
   input:focus, textarea:focus, select:focus{
@@ -254,12 +256,18 @@
         </div>
 
         <div class="field">
-          <label for="dob"><span data-en="Date of Birth" data-ur="تاریخ پیدائش">Date of Birth</span><span class="req">*</span></label>
-          <input type="date" id="dob" name="dob" min="1930-01-01" max="2010-12-31" required>
+          <label for="dobDay"><span data-en="Date of Birth" data-ur="تاریخ پیدائش">Date of Birth</span><span class="req">*</span></label>
+          <div class="dob-row">
+            <select id="dobDay" required></select>
+            <select id="dobMonth" required></select>
+            <select id="dobYear" required></select>
+          </div>
+          <input type="hidden" id="dob" name="dob" required>
           <div class="help" id="ageDisplay"></div>
           <div class="error-msg" data-en="Please enter your date of birth." data-ur="براہ کرم اپنی تاریخ پیدائش درج کریں۔">Please enter your date of birth.</div>
           <div class="error-msg" id="err-dob-age" data-en="You must be at least 18 years old to register." data-ur="رجسٹریشن کے لیے آپ کی عمر کم از کم 18 سال ہونی چاہیے۔">You must be at least 18 years old to register.</div>
         </div>
+
 
         <div class="field">
           <label><span data-en="Marital Status" data-ur="ازدواجی حیثیت">Marital Status</span><span class="req">*</span></label>
@@ -818,8 +826,21 @@
     stepEl.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
   }
 
-  // Restrict Date of Birth to 18+ years old as on today.
+  // Date of Birth — three plain dropdowns (Day/Month/Year) instead of a
+  // native date picker, to avoid inconsistent/buggy calendar-widget
+  // behaviour across phones and browsers.
   const dobInput = document.getElementById('dob');
+  const dobDay = document.getElementById('dobDay');
+  const dobMonth = document.getElementById('dobMonth');
+  const dobYear = document.getElementById('dobYear');
+  const MONTHS = [
+    { en: 'January', ur: 'جنوری' }, { en: 'February', ur: 'فروری' }, { en: 'March', ur: 'مارچ' },
+    { en: 'April', ur: 'اپریل' }, { en: 'May', ur: 'مئی' }, { en: 'June', ur: 'جون' },
+    { en: 'July', ur: 'جولائی' }, { en: 'August', ur: 'اگست' }, { en: 'September', ur: 'ستمبر' },
+    { en: 'October', ur: 'اکتوبر' }, { en: 'November', ur: 'نومبر' }, { en: 'December', ur: 'دسمبر' }
+  ];
+  const MIN_YEAR = 1930;
+
   function eighteenYearsAgo(){
     const d = new Date();
     d.setFullYear(d.getFullYear() - 18);
@@ -831,13 +852,51 @@
     if(isNaN(dob.getTime())) return false;
     return dob <= eighteenYearsAgo();
   }
-  if(dobInput){
-    const maxDob = eighteenYearsAgo();
-    const yyyy = maxDob.getFullYear();
-    const mm = String(maxDob.getMonth() + 1).padStart(2, '0');
-    const dd = String(maxDob.getDate()).padStart(2, '0');
-    dobInput.max = `${yyyy}-${mm}-${dd}`;
+  function daysInMonth(month, year){
+    return new Date(year, month, 0).getDate(); // month is 1-indexed here
   }
+  function populateDobSelects(){
+    const maxYear = eighteenYearsAgo().getFullYear();
+
+    dobMonth.innerHTML = '<option value="" disabled selected data-en="Month" data-ur="مہینہ">Month</option>' +
+      MONTHS.map((m, i) => {
+        const mm = String(i + 1).padStart(2, '0');
+        const label = currentLang === 'ur' ? m.ur : m.en;
+        return `<option value="${mm}" data-en="${m.en}" data-ur="${m.ur}">${label}</option>`;
+      }).join('');
+
+    dobYear.innerHTML = '<option value="" disabled selected data-en="Year" data-ur="سال">Year</option>' +
+      Array.from({ length: maxYear - MIN_YEAR + 1 }, (_, i) => maxYear - i)
+        .map(y => `<option value="${y}">${y}</option>`).join('');
+
+    refreshDobDayOptions();
+  }
+  function refreshDobDayOptions(){
+    const selectedDay = dobDay.value;
+    const month = dobMonth.value ? parseInt(dobMonth.value, 10) : null;
+    const year = dobYear.value ? parseInt(dobYear.value, 10) : eighteenYearsAgo().getFullYear();
+    const maxDay = month ? daysInMonth(month, year) : 31;
+
+    dobDay.innerHTML = '<option value="" disabled selected data-en="Day" data-ur="دن">Day</option>' +
+      Array.from({ length: maxDay }, (_, i) => i + 1)
+        .map(d => `<option value="${String(d).padStart(2,'0')}">${d}</option>`).join('');
+
+    if(selectedDay && parseInt(selectedDay, 10) <= maxDay){
+      dobDay.value = selectedDay;
+    }
+  }
+  function syncDobHiddenField(){
+    const d = dobDay.value, m = dobMonth.value, y = dobYear.value;
+    dobInput.value = (d && m && y) ? `${y}-${m}-${d}` : '';
+    updateAgeDisplay();
+  }
+  if(dobDay && dobMonth && dobYear){
+    populateDobSelects();
+    dobMonth.addEventListener('change', function(){ refreshDobDayOptions(); syncDobHiddenField(); });
+    dobYear.addEventListener('change', function(){ refreshDobDayOptions(); syncDobHiddenField(); });
+    dobDay.addEventListener('change', syncDobHiddenField);
+  }
+
   const ageDisplay = document.getElementById('ageDisplay');
   function computeAge(dateStr){
     const dob = new Date(dateStr + 'T00:00:00');
@@ -849,7 +908,7 @@
     return age;
   }
   function updateAgeDisplay(){
-    if(!ageDisplay) return;
+    if(!ageDisplay || !dobInput) return;
     const val = dobInput.value.trim();
     if(!val){ ageDisplay.textContent = ''; return; }
     const age = computeAge(val);
@@ -857,10 +916,6 @@
     ageDisplay.textContent = currentLang === 'ur'
       ? ('آپ کی عمر: ' + age + ' سال')
       : ('Your age: ' + age + ' years');
-  }
-  if(dobInput){
-    dobInput.addEventListener('change', updateAgeDisplay);
-    dobInput.addEventListener('input', updateAgeDisplay);
   }
 
   // Toggle gender-conditional fields.
@@ -1028,6 +1083,7 @@
       if(!isAtLeast18(dobInput.value)){
         valid = false;
         dobInput.classList.add('invalid');
+        if(dobDay){ dobDay.classList.add('invalid'); dobMonth.classList.add('invalid'); dobYear.classList.add('invalid'); }
         document.getElementById('err-dob-age').classList.add('show');
         markInvalid(dobInput.closest('.field'));
       }
